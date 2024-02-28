@@ -1,0 +1,9 @@
+[versions]
+junit-jupiter = "5.10.2"
+
+[libraries]
+junit-jupiter-bom = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
+kotest = { module = "io.kotest:kotest-assertions-core", version = "5.8.0" }
+
+[plugins]
+jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.20" }
