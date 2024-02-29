@@ -32,9 +32,9 @@ class LexerTests {
         )
     }
 
-    @Test
-    fun `Workspace keyword`() {
-        val text = "workspace"
+    @ParameterizedTest
+    @ValueSource(strings = ["workspace", "WORKSPACE", "WorkSpace"])
+    fun `Workspace keyword`(text: String) {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
@@ -115,13 +115,13 @@ class LexerTests {
         )
     }
 
-    @Test
-    fun `Model keyword`() {
-        val text = "model"
+    @ParameterizedTest
+    @ValueSource(strings = ["model", "MODEL", "mOdEl"])
+    fun `Model keyword`(text: String) {
         val lexer = StructurizrLexer(text)
 
         lexer.next() shouldBe ModelKeywordToken(
-            text = "model",
+            text = text,
             coordinates = Coordinates(
                 lineStart = 0,
                 lineEnd = 0,

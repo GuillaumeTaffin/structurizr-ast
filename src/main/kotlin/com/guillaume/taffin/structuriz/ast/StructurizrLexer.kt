@@ -93,12 +93,14 @@ class StructurizrLexer(private val text: String) {
 private
 
 object Patterns {
-    val WORKSPACE = Regex("workspace")
-    val MODEL = Regex("model")
+    val WORKSPACE = keywordRegex("workspace")
+    val MODEL = keywordRegex("model")
     val OPEN_BRACE = Regex("\\{")
     val CLOSE_BRACE = Regex("}")
     val WHITESPACE = Regex("\\s+")
 }
+
+private fun keywordRegex(pattern: String) = pattern.toRegex(option = RegexOption.IGNORE_CASE)
 
 data class Coordinates(
     val lineStart: Int,
