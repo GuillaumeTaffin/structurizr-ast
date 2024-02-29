@@ -1,6 +1,7 @@
 package com.guillaume.taffin.structuriz.ast
 
 import com.guillaume.taffin.structuriz.ast.Patterns.CLOSE_BRACE
+import com.guillaume.taffin.structuriz.ast.Patterns.IDENTIFIER
 import com.guillaume.taffin.structuriz.ast.Patterns.MODEL
 import com.guillaume.taffin.structuriz.ast.Patterns.OPEN_BRACE
 import com.guillaume.taffin.structuriz.ast.Patterns.WHITESPACE
@@ -31,6 +32,10 @@ class StructurizrLexer(private val text: String) {
 
         CLOSE_BRACE.matchAt(text, charPointer)?.let {
             return makeSingleLineTokenAndMove(it.value, ::CloseBraceToken)
+        }
+
+        IDENTIFIER.matchAt(text, charPointer)?.let {
+            return makeSingleLineTokenAndMove(it.value, ::IdentifierToken)
         }
 
         WHITESPACE.matchAt(text, charPointer)?.let {
@@ -97,6 +102,7 @@ object Patterns {
     val MODEL = keywordRegex("model")
     val OPEN_BRACE = Regex("\\{")
     val CLOSE_BRACE = Regex("}")
+    val IDENTIFIER = Regex("\\w[a-zA-Z0-9_-]*")
     val WHITESPACE = Regex("\\s+")
 }
 
@@ -154,6 +160,10 @@ class OpenBraceToken(text: String, coordinates: Coordinates) :
 
 class CloseBraceToken(text: String, coordinates: Coordinates) :
     StructurizrToken("CloseBraceToken", text, coordinates)
+
+class IdentifierToken(text: String, coordinates: Coordinates) :
+    StructurizrToken("IdentifierToken", text, coordinates)
+
 
 class EofToken(text: String, coordinates: Coordinates) :
     StructurizrToken("EofToken", text, coordinates)

@@ -130,4 +130,20 @@ class LexerTests {
             )
         )
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["michel", "_5o5o"])
+    fun `Identifier token`(text: String) {
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe IdentifierToken(
+            text = text,
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = text.length - 1,
+            )
+        )
+    }
 }
