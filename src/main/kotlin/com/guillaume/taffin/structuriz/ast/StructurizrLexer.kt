@@ -1,6 +1,7 @@
 package com.guillaume.taffin.structuriz.ast
 
 import com.guillaume.taffin.structuriz.ast.Patterns.CLOSE_BRACE
+import com.guillaume.taffin.structuriz.ast.Patterns.MODEL
 import com.guillaume.taffin.structuriz.ast.Patterns.OPEN_BRACE
 import com.guillaume.taffin.structuriz.ast.Patterns.WHITESPACE
 import com.guillaume.taffin.structuriz.ast.Patterns.WORKSPACE
@@ -18,6 +19,10 @@ class StructurizrLexer(private val text: String) {
 
         WORKSPACE.matchAt(text, charPointer)?.let {
             return makeSingleLineTokenAndMove(it.value, ::WorkspaceKeywordToken)
+        }
+
+        MODEL.matchAt(text, charPointer)?.let {
+            return makeSingleLineTokenAndMove(it.value, ::ModelKeywordToken)
         }
 
         OPEN_BRACE.matchAt(text, charPointer)?.let {
@@ -89,6 +94,7 @@ private
 
 object Patterns {
     val WORKSPACE = Regex("workspace")
+    val MODEL = Regex("model")
     val OPEN_BRACE = Regex("\\{")
     val CLOSE_BRACE = Regex("}")
     val WHITESPACE = Regex("\\s+")
@@ -134,6 +140,9 @@ sealed class StructurizrToken(
 
 class WorkspaceKeywordToken(text: String, coordinates: Coordinates) :
     StructurizrToken("WorkspaceKeywordToken", text, coordinates)
+
+class ModelKeywordToken(text: String, coordinates: Coordinates) :
+    StructurizrToken("ModelKeywordToken", text, coordinates)
 
 class WhitespaceToken(text: String, coordinates: Coordinates) :
     StructurizrToken("WhitespaceToken", text, coordinates)

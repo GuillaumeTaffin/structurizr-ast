@@ -114,4 +114,20 @@ class LexerTests {
             )
         )
     }
+
+    @Test
+    fun `Model keyword`() {
+        val text = "model"
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe ModelKeywordToken(
+            text = "model",
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = 4,
+            )
+        )
+    }
 }
