@@ -72,6 +72,7 @@ class StructurizrLexer(private val text: String) {
 val patternSpec: Array<Pair<Regex, TokenConstructor>> = arrayOf(
     keywordRegex("workspace") to token("WorkspaceKeywordToken"),
     keywordRegex("model") to token("ModelKeywordToken"),
+    keywordRegex("person") to token("PersonKeywordToken"),
     Regex("\\{") to token("OpenBraceToken"),
     Regex("}") to token("CloseBraceToken"),
     Regex("=") to token("AssignOperatorToken"),

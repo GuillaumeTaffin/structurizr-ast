@@ -175,4 +175,21 @@ class LexerTests {
             )
         )
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["person", "PERSON", "Person"])
+    fun `Person keyword`(text: String) {
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "PersonKeywordToken",
+            text = text,
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = 5,
+            )
+        )
+    }
 }
