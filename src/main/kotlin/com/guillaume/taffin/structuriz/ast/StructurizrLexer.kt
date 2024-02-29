@@ -1,12 +1,5 @@
 package com.guillaume.taffin.structuriz.ast
 
-import com.guillaume.taffin.structuriz.ast.Patterns.ASSIGN_OPERATOR
-import com.guillaume.taffin.structuriz.ast.Patterns.CLOSE_BRACE
-import com.guillaume.taffin.structuriz.ast.Patterns.IDENTIFIER
-import com.guillaume.taffin.structuriz.ast.Patterns.MODEL
-import com.guillaume.taffin.structuriz.ast.Patterns.OPEN_BRACE
-import com.guillaume.taffin.structuriz.ast.Patterns.WHITESPACE
-import com.guillaume.taffin.structuriz.ast.Patterns.WORKSPACE
 import kotlin.math.max
 
 class StructurizrLexer(private val text: String) {
@@ -19,35 +12,17 @@ class StructurizrLexer(private val text: String) {
 
     fun next(): StructurizrToken {
 
-        WORKSPACE.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::WorkspaceKeywordToken)
+        for ((pattern, constructor) in patternSpec) {
+            pattern.matchAt(text, charPointer)?.let {
+                return if (it.value.lines().size == 1) {
+                    makeSingleLineTokenAndMove(it.value, constructor)
+                } else {
+                    makeMultilineTokenAndMove(it.value, constructor)
+                }
+            }
         }
 
-        MODEL.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::ModelKeywordToken)
-        }
-
-        OPEN_BRACE.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::OpenBraceToken)
-        }
-
-        CLOSE_BRACE.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::CloseBraceToken)
-        }
-
-        ASSIGN_OPERATOR.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::AssignOperatorToken)
-        }
-
-        IDENTIFIER.matchAt(text, charPointer)?.let {
-            return makeSingleLineTokenAndMove(it.value, ::IdentifierToken)
-        }
-
-        WHITESPACE.matchAt(text, charPointer)?.let {
-            return makeMultilineTokenAndMove(it.value, ::WhitespaceToken)
-        }
-
-        return makeSingleLineTokenAndMove("", ::EofToken)
+        return makeSingleLineTokenAndMove("", token("EofToken"))
 
     }
 
@@ -58,28 +33,22 @@ class StructurizrLexer(private val text: String) {
         val lines = text.lines()
         val token = constructor(
             text,
-            multilineCoordinates(lines, text)
+            multilineCoordinates(lines)
         )
 
         linePointer += lines.size - 1
+        columnPointer = lines.last().length
         charPointer += text.length
         return token
     }
 
     private fun multilineCoordinates(
-        lines: List<String>,
-        text: String
+        lines: List<String>
     ) = Coordinates(
         lineStart = linePointer,
         lineEnd = linePointer + lines.size - 1,
         colStart = columnPointer,
-        colEnd = if (lines.size == 1) {
-            columnPointer += text.length
-            columnPointer - 1
-        } else {
-            columnPointer = lines.last().length
-            max(0, columnPointer - 1)
-        }
+        colEnd = max(0, lines.last().length - 1)
     )
 
     private fun makeSingleLineTokenAndMove(
@@ -100,17 +69,17 @@ class StructurizrLexer(private val text: String) {
     )
 }
 
-private
+val patternSpec: Array<Pair<Regex, TokenConstructor>> = arrayOf(
+    keywordRegex("workspace") to token("WorkspaceKeywordToken"),
+    keywordRegex("model") to token("ModelKeywordToken"),
+    Regex("\\{") to token("OpenBraceToken"),
+    Regex("}") to token("CloseBraceToken"),
+    Regex("=") to token("AssignOperatorToken"),
+    Regex("\\w[a-zA-Z0-9_-]*") to token("IdentifierToken"),
+    Regex("\\s+") to token("WhitespaceToken"),
+)
 
-object Patterns {
-    val WORKSPACE = keywordRegex("workspace")
-    val MODEL = keywordRegex("model")
-    val OPEN_BRACE = Regex("\\{")
-    val CLOSE_BRACE = Regex("}")
-    val ASSIGN_OPERATOR = Regex("=")
-    val IDENTIFIER = Regex("\\w[a-zA-Z0-9_-]*")
-    val WHITESPACE = Regex("\\s+")
-}
+typealias TokenConstructor = (String, Coordinates) -> StructurizrToken
 
 private fun keywordRegex(pattern: String) = pattern.toRegex(option = RegexOption.IGNORE_CASE)
 
@@ -121,58 +90,12 @@ data class Coordinates(
     val colEnd: Int
 )
 
-sealed class StructurizrToken(
+data class StructurizrToken(
     val tokenId: String,
     val text: String,
     val coordinates: Coordinates,
-) {
+)
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as StructurizrToken
-
-        if (tokenId != other.tokenId) return false
-        if (text != other.text) return false
-        if (coordinates != other.coordinates) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = tokenId.hashCode()
-        result = 31 * result + text.hashCode()
-        result = 31 * result + coordinates.hashCode()
-        return result
-    }
-
-    override fun toString(): String {
-        return "StructurizrToken(tokenId='$tokenId', text='$text', coordinates=$coordinates)"
-    }
+fun token(id: String): TokenConstructor = { text, coordinates ->
+    StructurizrToken(id, text, coordinates)
 }
-
-class WorkspaceKeywordToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("WorkspaceKeywordToken", text, coordinates)
-
-class ModelKeywordToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("ModelKeywordToken", text, coordinates)
-
-class WhitespaceToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("WhitespaceToken", text, coordinates)
-
-class OpenBraceToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("OpenBraceToken", text, coordinates)
-
-class CloseBraceToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("CloseBraceToken", text, coordinates)
-
-class AssignOperatorToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("AssignOperatorToken", text, coordinates)
-
-class IdentifierToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("IdentifierToken", text, coordinates)
-
-
-class EofToken(text: String, coordinates: Coordinates) :
-    StructurizrToken("EofToken", text, coordinates)

@@ -12,7 +12,11 @@ class LexerTests {
         val lexer = StructurizrLexer("")
 
         lexer.hasNext() shouldBe false
-        lexer.next() shouldBe EofToken("", Coordinates(lineStart = 0, colStart = 0, lineEnd = 0, colEnd = 0))
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "EofToken",
+            text = "",
+            Coordinates(lineStart = 0, colStart = 0, lineEnd = 0, colEnd = 0)
+        )
     }
 
     @ParameterizedTest
@@ -21,7 +25,8 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe WhitespaceToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "WhitespaceToken",
             text,
             Coordinates(
                 lineStart = 0,
@@ -38,7 +43,8 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe WorkspaceKeywordToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "WorkspaceKeywordToken",
             text,
             Coordinates(
                 lineStart = 0,
@@ -55,8 +61,9 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe WhitespaceToken(
-            "\t \n  ",
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "WhitespaceToken",
+            text = "\t \n  ",
             Coordinates(
                 lineStart = 0,
                 lineEnd = 1,
@@ -66,8 +73,9 @@ class LexerTests {
         )
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe WorkspaceKeywordToken(
-            "workspace",
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "WorkspaceKeywordToken",
+            text = "workspace",
             Coordinates(
                 lineStart = 1,
                 lineEnd = 1,
@@ -77,8 +85,9 @@ class LexerTests {
         )
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe WhitespaceToken(
-            "  ",
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "WhitespaceToken",
+            text = "  ",
             Coordinates(
                 lineStart = 1,
                 lineEnd = 1,
@@ -95,7 +104,8 @@ class LexerTests {
         val text = "{}"
         val lexer = StructurizrLexer(text)
 
-        lexer.next() shouldBe OpenBraceToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "OpenBraceToken",
             text = "{",
             coordinates = Coordinates(
                 lineStart = 0,
@@ -104,7 +114,8 @@ class LexerTests {
                 colEnd = 0
             )
         )
-        lexer.next() shouldBe CloseBraceToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "CloseBraceToken",
             text = "}",
             coordinates = Coordinates(
                 lineStart = 0,
@@ -120,7 +131,8 @@ class LexerTests {
     fun `Model keyword`(text: String) {
         val lexer = StructurizrLexer(text)
 
-        lexer.next() shouldBe ModelKeywordToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "ModelKeywordToken",
             text = text,
             coordinates = Coordinates(
                 lineStart = 0,
@@ -136,7 +148,8 @@ class LexerTests {
     fun `Identifier token`(text: String) {
         val lexer = StructurizrLexer(text)
 
-        lexer.next() shouldBe IdentifierToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "IdentifierToken",
             text = text,
             coordinates = Coordinates(
                 lineStart = 0,
@@ -151,7 +164,8 @@ class LexerTests {
     fun `Assign operator`() {
         val lexer = StructurizrLexer("=")
 
-        lexer.next() shouldBe AssignOperatorToken(
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = "AssignOperatorToken",
             text = "=",
             coordinates = Coordinates(
                 lineStart = 0,
