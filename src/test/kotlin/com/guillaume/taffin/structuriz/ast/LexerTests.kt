@@ -89,4 +89,29 @@ class LexerTests {
 
         lexer.hasNext() shouldBe false
     }
+
+    @Test
+    fun `Curly braces tokens`() {
+        val text = "{}"
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe OpenBraceToken(
+            text = "{",
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = 0
+            )
+        )
+        lexer.next() shouldBe CloseBraceToken(
+            text = "}",
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 1,
+                colEnd = 1
+            )
+        )
+    }
 }

@@ -1,5 +1,7 @@
 package com.guillaume.taffin.structuriz.ast
 
+import com.guillaume.taffin.structuriz.ast.Patterns.CLOSE_BRACE
+import com.guillaume.taffin.structuriz.ast.Patterns.OPEN_BRACE
 import com.guillaume.taffin.structuriz.ast.Patterns.WHITESPACE
 import com.guillaume.taffin.structuriz.ast.Patterns.WORKSPACE
 import kotlin.math.max
@@ -16,6 +18,14 @@ class StructurizrLexer(private val text: String) {
 
         WORKSPACE.matchAt(text, charPointer)?.let {
             return makeSingleLineTokenAndMove(it.value, ::WorkspaceKeywordToken)
+        }
+
+        OPEN_BRACE.matchAt(text, charPointer)?.let {
+            return makeSingleLineTokenAndMove(it.value, ::OpenBraceToken)
+        }
+
+        CLOSE_BRACE.matchAt(text, charPointer)?.let {
+            return makeSingleLineTokenAndMove(it.value, ::CloseBraceToken)
         }
 
         WHITESPACE.matchAt(text, charPointer)?.let {
@@ -79,6 +89,8 @@ private
 
 object Patterns {
     val WORKSPACE = Regex("workspace")
+    val OPEN_BRACE = Regex("\\{")
+    val CLOSE_BRACE = Regex("}")
     val WHITESPACE = Regex("\\s+")
 }
 
@@ -125,6 +137,12 @@ class WorkspaceKeywordToken(text: String, coordinates: Coordinates) :
 
 class WhitespaceToken(text: String, coordinates: Coordinates) :
     StructurizrToken("WhitespaceToken", text, coordinates)
+
+class OpenBraceToken(text: String, coordinates: Coordinates) :
+    StructurizrToken("OpenBraceToken", text, coordinates)
+
+class CloseBraceToken(text: String, coordinates: Coordinates) :
+    StructurizrToken("CloseBraceToken", text, coordinates)
 
 class EofToken(text: String, coordinates: Coordinates) :
     StructurizrToken("EofToken", text, coordinates)
