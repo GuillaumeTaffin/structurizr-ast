@@ -12,7 +12,7 @@ class LexerTests {
         val lexer = StructurizrLexer("")
 
         lexer.hasNext() shouldBe false
-        lexer.next() shouldBe StructurizrToken("EofToken", "", lineStart = 0, charStart = 0, lineEnd = 0, charEnd = 0)
+        lexer.next() shouldBe EofToken("", Coordinates(lineStart = 0, colStart = 0, lineEnd = 0, colEnd = 0))
     }
 
     @ParameterizedTest
@@ -21,13 +21,14 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe StructurizrToken(
-            "WhitespaceToken",
+        lexer.next() shouldBe WhitespaceToken(
             text,
-            lineStart = 0,
-            charStart = 0,
-            lineEnd = 0,
-            charEnd = text.length - 1
+            Coordinates(
+                lineStart = 0,
+                lineEnd = text.lines().size - 1,
+                colStart = 0,
+                colEnd = if (text.lines().size > 1) 0 else text.length - 1
+            )
         )
     }
 
@@ -37,49 +38,53 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe StructurizrToken(
-            "WorkspaceKeywordToken",
+        lexer.next() shouldBe WorkspaceKeywordToken(
             text,
-            lineStart = 0,
-            charStart = 0,
-            lineEnd = 0,
-            charEnd = text.length - 1
+            Coordinates(
+                lineStart = 0,
+                colStart = 0,
+                lineEnd = 0,
+                colEnd = text.length - 1
+            )
         )
     }
 
     @Test
     fun `Workspace keyword surrounded by whitespace`() {
-        val text = "\t workspace  "
+        val text = "\t \n  workspace  "
         val lexer = StructurizrLexer(text)
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe StructurizrToken(
-            "WhitespaceToken",
-            "\t ",
-            lineStart = 0,
-            charStart = 0,
-            lineEnd = 0,
-            charEnd = 1
+        lexer.next() shouldBe WhitespaceToken(
+            "\t \n  ",
+            Coordinates(
+                lineStart = 0,
+                lineEnd = 1,
+                colStart = 0,
+                colEnd = 1
+            )
         )
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe StructurizrToken(
-            "WorkspaceKeywordToken",
+        lexer.next() shouldBe WorkspaceKeywordToken(
             "workspace",
-            lineStart = 0,
-            charStart = 2,
-            lineEnd = 0,
-            charEnd = 10
+            Coordinates(
+                lineStart = 1,
+                lineEnd = 1,
+                colStart = 2,
+                colEnd = 10
+            )
         )
 
         lexer.hasNext() shouldBe true
-        lexer.next() shouldBe StructurizrToken(
-            "WhitespaceToken",
+        lexer.next() shouldBe WhitespaceToken(
             "  ",
-            lineStart = 0,
-            charStart = 11,
-            lineEnd = 0,
-            charEnd = 12
+            Coordinates(
+                lineStart = 1,
+                lineEnd = 1,
+                colStart = 11,
+                colEnd = 12
+            )
         )
 
         lexer.hasNext() shouldBe false
