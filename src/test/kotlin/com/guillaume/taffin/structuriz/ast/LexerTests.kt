@@ -146,4 +146,19 @@ class LexerTests {
             )
         )
     }
+
+    @Test
+    fun `Assign operator`() {
+        val lexer = StructurizrLexer("=")
+
+        lexer.next() shouldBe AssignOperatorToken(
+            text = "=",
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = 0,
+            )
+        )
+    }
 }
