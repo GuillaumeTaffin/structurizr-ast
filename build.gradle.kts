@@ -8,10 +8,13 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.gson)
+
     testImplementation(platform(libs.junit.jupiter.bom))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation(libs.kotest)
+    testImplementation(libs.kotest.json.assertion)
 }
 
 java {

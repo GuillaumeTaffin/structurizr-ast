@@ -1,9 +1,12 @@
 [versions]
 junit-jupiter = "5.10.2"
+kotest = "5.8.0"
 
 [libraries]
 junit-jupiter-bom = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
-kotest = { module = "io.kotest:kotest-assertions-core", version = "5.8.0" }
+kotest = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-json-assertion = { module = "io.kotest:kotest-assertions-json", version.ref = "kotest" }
+gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.20" }

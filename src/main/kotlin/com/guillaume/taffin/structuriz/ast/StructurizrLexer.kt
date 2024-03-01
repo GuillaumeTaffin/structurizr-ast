@@ -10,7 +10,7 @@ class StructurizrLexer(private val text: String) {
 
     fun hasNext(): Boolean = charPointer < text.length
 
-    fun next(): StructurizrToken {
+    fun next(): StructurizrToken? {
 
         for ((pattern, constructor) in patternSpec) {
             pattern.matchAt(text, charPointer)?.let {
@@ -22,7 +22,7 @@ class StructurizrLexer(private val text: String) {
             }
         }
 
-        return makeSingleLineTokenAndMove("", token("EofToken"))
+        return null
 
     }
 
@@ -70,15 +70,26 @@ class StructurizrLexer(private val text: String) {
 }
 
 val patternSpec: Array<Pair<Regex, TokenConstructor>> = arrayOf(
-    keywordRegex("workspace") to token("WorkspaceKeywordToken"),
-    keywordRegex("model") to token("ModelKeywordToken"),
-    keywordRegex("person") to token("PersonKeywordToken"),
-    Regex("\\{") to token("OpenBraceToken"),
-    Regex("}") to token("CloseBraceToken"),
-    Regex("=") to token("AssignOperatorToken"),
-    Regex("\\w[a-zA-Z0-9_-]*") to token("IdentifierToken"),
-    Regex("\\s+") to token("WhitespaceToken"),
+    keywordRegex("workspace") to token(TokenIds.workspace),
+    keywordRegex("model") to token(TokenIds.model),
+    keywordRegex("person") to token(TokenIds.person),
+    Regex("\\{") to token(TokenIds.openBrace),
+    Regex("}") to token(TokenIds.closeBrace),
+    Regex("=") to token(TokenIds.assignOperator),
+    Regex("\\w[a-zA-Z0-9_-]*") to token(TokenIds.identifier),
+    Regex("\\s+") to token(TokenIds.whitespace),
 )
+
+object TokenIds {
+    const val workspace = "WorkspaceKeywordToken"
+    const val model = "ModelKeywordToken"
+    const val person = "PersonKeywordToken"
+    const val openBrace = "OpenBraceToken"
+    const val closeBrace = "CloseBraceToken"
+    const val assignOperator = "AssignOperatorToken"
+    const val identifier = "IdentifierToken"
+    const val whitespace = "WhitespaceToken"
+}
 
 typealias TokenConstructor = (String, Coordinates) -> StructurizrToken
 

@@ -12,11 +12,7 @@ class LexerTests {
         val lexer = StructurizrLexer("")
 
         lexer.hasNext() shouldBe false
-        lexer.next() shouldBe StructurizrToken(
-            tokenId = "EofToken",
-            text = "",
-            Coordinates(lineStart = 0, colStart = 0, lineEnd = 0, colEnd = 0)
-        )
+        lexer.next() shouldBe null
     }
 
     @ParameterizedTest
