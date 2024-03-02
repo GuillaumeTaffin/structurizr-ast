@@ -12,7 +12,7 @@
         }
       },
       "children": [],
-      "type": "AstLeaf"
+      "type": "Whitespace"
     }
   ],
   "type": "StructurizrDslFile"

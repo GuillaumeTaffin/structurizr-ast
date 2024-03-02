@@ -10,7 +10,7 @@ class StructurizrLexer(private val text: String) {
 
     private val tokenFifo = ArrayDeque<StructurizrToken>()
 
-    fun hasNext(): Boolean = tokenFifo.isNotEmpty() && charPointer < text.length
+    fun hasNext(): Boolean = tokenFifo.isNotEmpty() || charPointer < text.length
 
     fun next(): StructurizrToken? {
 
