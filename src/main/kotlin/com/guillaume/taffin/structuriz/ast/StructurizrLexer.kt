@@ -8,9 +8,13 @@ class StructurizrLexer(private val text: String) {
     private var linePointer: Int = 0
     private var columnPointer: Int = 0
 
-    fun hasNext(): Boolean = charPointer < text.length
+    private val tokenFifo = ArrayDeque<StructurizrToken>()
+
+    fun hasNext(): Boolean = tokenFifo.isNotEmpty() && charPointer < text.length
 
     fun next(): StructurizrToken? {
+
+        if (tokenFifo.isNotEmpty()) return tokenFifo.removeFirst()
 
         for ((pattern, constructor) in patternSpec) {
             pattern.matchAt(text, charPointer)?.let {
@@ -67,6 +71,10 @@ class StructurizrLexer(private val text: String) {
         colStart = columnPointer,
         colEnd = max(0, columnPointer + text.length - 1)
     )
+
+    fun pushBack(token: StructurizrToken) {
+        tokenFifo.addFirst(token)
+    }
 }
 
 val patternSpec: Array<Pair<Regex, TokenConstructor>> = arrayOf(

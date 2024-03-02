@@ -1,30 +1,34 @@
 package com.guillaume.taffin.structuriz.ast
 
 import io.kotest.assertions.json.shouldEqualJson
-import org.junit.jupiter.api.Test
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import java.nio.file.Paths
 
 class ParserTests {
 
-    @Test
-    fun `Simple workspace`() {
-        val dsl = """
-            workspace
-            """.trim()
+    val resources = Paths.get("src/test/resources").toFile()
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "parser/empty_file.dsl",
+            "parser/empty_anonymous_workspace.dsl",
+        ]
+    )
+    fun `Simple workspace`(dslFile: String) {
+        val dsl = resources.resolve(dslFile).readText()
+        val referenceTree = resources.resolve(dslFile.replace("dsl", "json")).readText()
 
         val parser = StructurizrParser()
 
-        val root = parser.parse(dsl)
+        val astNode = parser.parse(dsl)
 
-        serialize(root) shouldEqualJson """
-            {
-              "children": [
-                {
-                  "children": [],
-                  "type": "WorkspaceDefinition"
-                }
-              ],
-              "type": "WorkspaceNode"
-            }
-            """
+        val actualTree = serializeJson(astNode)
+        val actualDsl = serializeDsl(astNode)
+
+        actualTree shouldEqualJson referenceTree
+        actualDsl shouldBe dsl
     }
 }

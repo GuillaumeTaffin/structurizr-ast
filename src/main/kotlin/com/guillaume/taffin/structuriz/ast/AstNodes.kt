@@ -1,11 +1,23 @@
 package com.guillaume.taffin.structuriz.ast
 
-sealed class AstNode(val children: Array<AstNode>?) {
+sealed class AstNode(val children: List<AstNode>) {
     val type = this::class.simpleName
 }
 
-class AstLeaf(val token: StructurizrToken) : AstNode(null)
+sealed class AstLeaf(val token: StructurizrToken) : AstNode(listOf())
 
-class WorkspaceNode(definition: WorkspaceDefinition) : AstNode(arrayOf(definition))
+class StructurizrDslFile(children: List<AstNode> = listOf()) : AstNode(children)
 
-class WorkspaceDefinition(keyword: StructurizrToken) : AstNode(children = arrayOf(AstLeaf(keyword)))
+class WorkspaceNode(children: List<AstNode>) : AstNode(children)
+
+class WorkspaceDefinition(children: List<AstNode>) : AstNode(children)
+
+class WorkspaceBlock(children: List<AstNode>) : AstNode(children)
+
+class Whitespace(token: StructurizrToken) : AstLeaf(token)
+
+class OpenBrace(token: StructurizrToken) : AstLeaf(token)
+
+class CloseBrace(token: StructurizrToken) : AstLeaf(token)
+
+class WorkspaceKeyword(token: StructurizrToken) : AstLeaf(token)

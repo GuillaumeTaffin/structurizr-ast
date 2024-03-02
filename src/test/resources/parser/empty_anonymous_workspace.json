@@ -1,0 +1,90 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "WorkspaceKeywordToken",
+                "text": "workspace",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 0,
+                  "colEnd": 8
+                }
+              },
+              "children": [],
+              "type": "WorkspaceKeyword"
+            },
+            {
+              "token": {
+                "tokenId": "WhitespaceToken",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 9,
+                  "colEnd": 9
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            }
+          ],
+          "type": "WorkspaceDefinition"
+        },
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "OpenBraceToken",
+                "text": "{",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 10,
+                  "colEnd": 10
+                }
+              },
+              "children": [],
+              "type": "OpenBrace"
+            },
+            {
+              "token": {
+                "tokenId": "WhitespaceToken",
+                "text": "\n\n",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 2,
+                  "colStart": 11,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
+                "tokenId": "CloseBraceToken",
+                "text": "}",
+                "coordinates": {
+                  "lineStart": 2,
+                  "lineEnd": 2,
+                  "colStart": 0,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "CloseBrace"
+            }
+          ],
+          "type": "WorkspaceBlock"
+        }
+      ],
+      "type": "WorkspaceNode"
+    }
+  ],
+  "type": "StructurizrDslFile"
+}
