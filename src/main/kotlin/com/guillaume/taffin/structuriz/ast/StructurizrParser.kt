@@ -11,10 +11,7 @@ class StructurizrParser {
     }
 
     /**
-     * file =
-     *  | WHITESPACE*
-     *  | workspace
-     *  | WHITESPACE*
+     * file = WHITESPACE* workspace WHITESPACE*
      */
     private tailrec fun parseStructurizrDslFile(currentLevelChildren: List<AstNode> = listOf()): StructurizrDslFile {
         return when (val next = lexer.next()) {
@@ -32,15 +29,12 @@ class StructurizrParser {
     }
 
     /**
-     * workspace =
-     *  | workspaceDefinition
-     *  | workspaceBlock
+     * workspace = workspaceDefinition workspaceBlock
      */
     private tailrec fun parseWorkspace(children: List<AstNode> = listOf()): WorkspaceNode {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in workspace node")
             else -> when (next.tokenId) {
-                TokenIds.whitespace -> parseWorkspace(children + Whitespace(next))
                 TokenIds.workspace -> {
                     lexer.pushBack(next)
                     parseWorkspace(children + parseWorkspaceDefinition())
@@ -57,9 +51,7 @@ class StructurizrParser {
     }
 
     /**
-     * workspaceDefinition =
-     *  | WORKSPACE
-     *  | WHITESPACE*
+     * workspaceDefinition = WORKSPACE WHITESPACE*
      */
     private tailrec fun parseWorkspaceDefinition(
         children: List<AstNode> = listOf()
@@ -80,10 +72,7 @@ class StructurizrParser {
     }
 
     /**
-     * workspaceBlock =
-     *  | {
-     *  | WHITESPACE*
-     *  | }
+     * workspaceBlock = { WHITESPACE* model? WHITESPACE* }
      */
     private tailrec fun parseWorkspaceBlock(children: List<AstNode> = listOf()): WorkspaceBlock {
         return when (val next = lexer.next()) {
@@ -103,9 +92,7 @@ class StructurizrParser {
     }
 
     /**
-     * model =
-     *  | modelDefinition
-     *  | modelBlock
+     * model = modelDefinition modelBlock
      */
     private tailrec fun parseModel(children: List<AstNode> = listOf()): ModelNode {
         return when (val next = lexer.next()) {
@@ -121,16 +108,13 @@ class StructurizrParser {
                     ModelNode(children + parseModelBlock())
                 }
 
-                TokenIds.whitespace -> parseModel(children + Whitespace(next))
                 else -> throw Exception("Unexpected token in model : ${next.tokenId}")
             }
         }
     }
 
     /**
-     * modelDefinition =
-     *  | MODEL
-     *  | WHITESPACE*
+     * modelDefinition = MODEL WHITESPACE*
      */
     private tailrec fun parseModelDefinition(children: List<AstNode> = listOf()): ModelDefinition {
         return when (val next = lexer.next()) {
@@ -149,10 +133,7 @@ class StructurizrParser {
     }
 
     /**
-     * modelBlock =
-     *  | {
-     *  | WHITESPACE*
-     *  | }
+     * modelBlock = { WHITESPACE* }
      */
     private tailrec fun parseModelBlock(children: List<AstNode> = listOf()): ModelBlock {
         return when (val next = lexer.next()) {
