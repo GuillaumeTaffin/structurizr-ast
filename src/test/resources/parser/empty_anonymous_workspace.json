@@ -54,11 +54,110 @@
             {
               "token": {
                 "tokenId": "WhitespaceToken",
-                "text": "\n\n",
+                "text": "\n\n    ",
                 "coordinates": {
                   "lineStart": 0,
                   "lineEnd": 2,
                   "colStart": 11,
+                  "colEnd": 3
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "token": {
+                        "tokenId": "ModelKeywordToken",
+                        "text": "model",
+                        "coordinates": {
+                          "lineStart": 2,
+                          "lineEnd": 2,
+                          "colStart": 4,
+                          "colEnd": 8
+                        }
+                      },
+                      "children": [],
+                      "type": "ModelKeyword"
+                    },
+                    {
+                      "token": {
+                        "tokenId": "WhitespaceToken",
+                        "text": " ",
+                        "coordinates": {
+                          "lineStart": 2,
+                          "lineEnd": 2,
+                          "colStart": 9,
+                          "colEnd": 9
+                        }
+                      },
+                      "children": [],
+                      "type": "Whitespace"
+                    }
+                  ],
+                  "type": "ModelDefinition"
+                },
+                {
+                  "children": [
+                    {
+                      "token": {
+                        "tokenId": "OpenBraceToken",
+                        "text": "{",
+                        "coordinates": {
+                          "lineStart": 2,
+                          "lineEnd": 2,
+                          "colStart": 10,
+                          "colEnd": 10
+                        }
+                      },
+                      "children": [],
+                      "type": "OpenBrace"
+                    },
+                    {
+                      "token": {
+                        "tokenId": "WhitespaceToken",
+                        "text": "\n\n    ",
+                        "coordinates": {
+                          "lineStart": 2,
+                          "lineEnd": 4,
+                          "colStart": 11,
+                          "colEnd": 3
+                        }
+                      },
+                      "children": [],
+                      "type": "Whitespace"
+                    },
+                    {
+                      "token": {
+                        "tokenId": "CloseBraceToken",
+                        "text": "}",
+                        "coordinates": {
+                          "lineStart": 4,
+                          "lineEnd": 4,
+                          "colStart": 4,
+                          "colEnd": 4
+                        }
+                      },
+                      "children": [],
+                      "type": "CloseBrace"
+                    }
+                  ],
+                  "type": "ModelBlock"
+                }
+              ],
+              "type": "ModelNode"
+            },
+            {
+              "token": {
+                "tokenId": "WhitespaceToken",
+                "text": "\n\n",
+                "coordinates": {
+                  "lineStart": 4,
+                  "lineEnd": 6,
+                  "colStart": 5,
                   "colEnd": 0
                 }
               },
@@ -70,8 +169,8 @@
                 "tokenId": "CloseBraceToken",
                 "text": "}",
                 "coordinates": {
-                  "lineStart": 2,
-                  "lineEnd": 2,
+                  "lineStart": 6,
+                  "lineEnd": 6,
                   "colStart": 0,
                   "colEnd": 0
                 }

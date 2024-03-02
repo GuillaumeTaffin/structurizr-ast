@@ -10,6 +10,8 @@ class StructurizrDslFile(children: List<AstNode> = listOf()) : AstNode(children)
 
 class WorkspaceNode(children: List<AstNode>) : AstNode(children)
 
+class ModelNode(children: List<AstNode>) : AstNode(children)
+
 class WorkspaceDefinition(children: List<AstNode>) : AstNode(children)
 
 class WorkspaceBlock(children: List<AstNode>) : AstNode(children)
@@ -21,3 +23,9 @@ class OpenBrace(token: StructurizrToken) : AstLeaf(token)
 class CloseBrace(token: StructurizrToken) : AstLeaf(token)
 
 class WorkspaceKeyword(token: StructurizrToken) : AstLeaf(token)
+
+class ModelDefinition(children: List<AstNode>) : AstNode(children)
+
+class ModelKeyword(token: StructurizrToken) : AstLeaf(token)
+
+class ModelBlock(children: List<AstNode>) : AstNode(children)
