@@ -28,4 +28,10 @@ class ModelDefinition(children: List<AstNode>) : AstNode(children)
 
 class ModelKeyword(token: StructurizrToken) : AstLeaf(token)
 
-class ModelBlock(children: List<AstNode>) : AstNode(children)
+class ModelSystems(children: List<AstNode>) : AstNode(children)
+
+class PersonDeclaration(children: List<AstNode>) : AstNode(children)
+
+class PersonKeyword(token: StructurizrToken) : AstLeaf(token)
+
+class Name(token: StructurizrToken) : AstLeaf(token)

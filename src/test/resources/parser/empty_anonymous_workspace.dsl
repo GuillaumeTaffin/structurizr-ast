@@ -1,7 +1,7 @@
 workspace {
 
     model {
-
+        person User
     }
 
 }

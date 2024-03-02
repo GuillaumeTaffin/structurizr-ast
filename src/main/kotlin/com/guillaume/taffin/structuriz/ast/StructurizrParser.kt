@@ -92,7 +92,7 @@ class StructurizrParser {
     }
 
     /**
-     * model = modelDefinition modelBlock
+     * model = modelDefinition modelSystems
      */
     private tailrec fun parseModel(children: List<AstNode> = listOf()): ModelNode {
         return when (val next = lexer.next()) {
@@ -105,7 +105,7 @@ class StructurizrParser {
 
                 TokenIds.openBrace -> {
                     lexer.pushBack(next)
-                    ModelNode(children + parseModelBlock())
+                    ModelNode(children + parseModelSystems())
                 }
 
                 else -> throw Exception("Unexpected token in model : ${next.tokenId}")
@@ -133,16 +133,53 @@ class StructurizrParser {
     }
 
     /**
-     * modelBlock = { WHITESPACE* }
+     * modelSystems = { WHITESPACE* personDeclaration }
      */
-    private tailrec fun parseModelBlock(children: List<AstNode> = listOf()): ModelBlock {
+    private tailrec fun parseModelSystems(children: List<AstNode> = listOf()): ModelSystems {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the model block")
             else -> when (next.tokenId) {
-                TokenIds.openBrace -> parseModelBlock(children + OpenBrace(next))
-                TokenIds.whitespace -> parseModelBlock(children + Whitespace(next))
-                TokenIds.closeBrace -> ModelBlock(children + CloseBrace(next))
+                TokenIds.openBrace -> parseModelSystems(children + OpenBrace(next))
+                TokenIds.whitespace -> parseModelSystems(children + Whitespace(next))
+                TokenIds.closeBrace -> ModelSystems(children + CloseBrace(next))
+                TokenIds.person -> {
+                    lexer.pushBack(next)
+                    parseModelSystems(children + parsePersonDeclaration())
+                }
+
                 else -> throw Exception("Unexpected token in model block : ${next.tokenId}")
+            }
+        }
+    }
+
+    /**
+     * personDeclaration = PERSON WHITESPACE* name
+     */
+    private tailrec fun parsePersonDeclaration(children: List<AstNode> = listOf()): PersonDeclaration {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Missing tokens in the person declaration")
+            else -> when (next.tokenId) {
+                TokenIds.person -> parsePersonDeclaration(children + PersonKeyword(next))
+                TokenIds.whitespace -> parsePersonDeclaration(children + Whitespace(next))
+                TokenIds.identifier -> {
+                    lexer.pushBack(next)
+                    PersonDeclaration(children + parseName())
+                }
+
+                else -> throw Exception("Unexpected token in person declaration : ${next.tokenId}")
+            }
+        }
+    }
+
+    /**
+     * name = IDENTIFIER
+     */
+    private fun parseName(): Name {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Missing tokens in the name")
+            else -> when (next.tokenId) {
+                TokenIds.identifier -> Name(next)
+                else -> throw Exception("Unexpected token in name : ${next.tokenId}")
             }
         }
     }

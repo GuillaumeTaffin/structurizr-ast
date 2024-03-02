@@ -119,11 +119,72 @@
                     {
                       "token": {
                         "tokenId": "WhitespaceToken",
-                        "text": "\n\n    ",
+                        "text": "\n        ",
                         "coordinates": {
                           "lineStart": 2,
-                          "lineEnd": 4,
+                          "lineEnd": 3,
                           "colStart": 11,
+                          "colEnd": 7
+                        }
+                      },
+                      "children": [],
+                      "type": "Whitespace"
+                    },
+                    {
+                      "children": [
+                        {
+                          "token": {
+                            "tokenId": "PersonKeywordToken",
+                            "text": "person",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 8,
+                              "colEnd": 13
+                            }
+                          },
+                          "children": [],
+                          "type": "PersonKeyword"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WhitespaceToken",
+                            "text": " ",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 14,
+                              "colEnd": 14
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "IdentifierToken",
+                            "text": "User",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 15,
+                              "colEnd": 18
+                            }
+                          },
+                          "children": [],
+                          "type": "Name"
+                        }
+                      ],
+                      "type": "PersonDeclaration"
+                    },
+                    {
+                      "token": {
+                        "tokenId": "WhitespaceToken",
+                        "text": "\n    ",
+                        "coordinates": {
+                          "lineStart": 3,
+                          "lineEnd": 4,
+                          "colStart": 19,
                           "colEnd": 3
                         }
                       },
@@ -145,7 +206,7 @@
                       "type": "CloseBrace"
                     }
                   ],
-                  "type": "ModelBlock"
+                  "type": "ModelSystems"
                 }
               ],
               "type": "ModelNode"
