@@ -16,6 +16,7 @@ class ParserTests {
         strings = [
             "parser/empty_file.dsl",
             "parser/empty_anonymous_workspace.dsl",
+            "parser/workspace_with_name.dsl",
         ]
     )
     fun `Valid workspace`(dslFile: String) {

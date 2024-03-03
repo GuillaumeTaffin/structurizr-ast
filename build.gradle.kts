@@ -26,3 +26,24 @@ java {
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+
+tasks.register("create-test-dsl") {
+    doFirst {
+        val filename = project.property("filename")
+        layout.projectDirectory
+            .file("src/test/resources/parser/${filename}.dsl")
+            .asFile
+            .writeText("")
+        layout.projectDirectory
+            .file("src/test/resources/parser/${filename}.json")
+            .asFile
+            .writeText(
+                """
+                |{
+                |  "children": [],
+                |  "type": "StructurizrDslFile"
+                |}
+                """.trimMargin("|")
+            )
+    }
+}
