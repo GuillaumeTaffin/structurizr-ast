@@ -13,7 +13,7 @@ class StructurizrParser {
     }
 
     /**
-     * file = WHITESPACE* workspace WHITESPACE*
+     * file = WHITESPACE* workspace? WHITESPACE*
      */
     private tailrec fun parseStructurizrDslFile(children: List<AstNode> = listOf()): StructurizrDslFile {
         return when (val next = lexer.next()) {
