@@ -35,7 +35,7 @@ class StructurizrParser {
      */
     private tailrec fun parseWorkspace(children: List<AstNode> = listOf()): WorkspaceNode {
         return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in workspace node")
+            null -> WorkspaceNode(children)
             else -> when (next.tokenId) {
                 TokenId.WORKSPACE -> {
                     lexer.pushBack(next)
@@ -60,7 +60,7 @@ class StructurizrParser {
         nameFound: Boolean = false,
     ): WorkspaceDefinition {
         return when (val next = lexer.next()) {
-            null -> throw Exception()
+            null -> WorkspaceDefinition(children)
             else -> when (next.tokenId) {
                 TokenId.WORKSPACE -> parseWorkspaceDefinition(children + WorkspaceKeyword(next), nameFound = nameFound)
                 TokenId.STRING, TokenId.IDENTIFIER -> {

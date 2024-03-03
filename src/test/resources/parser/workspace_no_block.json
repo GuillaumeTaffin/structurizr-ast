@@ -1,0 +1,57 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "WORKSPACE",
+                "text": "workspace",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 0,
+                  "colEnd": 8
+                }
+              },
+              "children": [],
+              "type": "WorkspaceKeyword"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 9,
+                  "colEnd": 9
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
+                "tokenId": "STRING",
+                "text": "\"My workspace\"",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 10,
+                  "colEnd": 23
+                }
+              },
+              "children": [],
+              "type": "Name"
+            }
+          ],
+          "type": "WorkspaceDefinition"
+        }
+      ],
+      "type": "WorkspaceNode"
+    }
+  ],
+  "type": "StructurizrDslFile"
+}
