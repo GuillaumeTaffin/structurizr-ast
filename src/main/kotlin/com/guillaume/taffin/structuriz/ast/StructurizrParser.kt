@@ -19,8 +19,8 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> StructurizrDslFile(children)
             else -> when (next.tokenId) {
-                TokenIds.whitespace -> parseStructurizrDslFile(children + Whitespace(next))
-                TokenIds.workspace -> {
+                TokenId.WHITESPACE -> parseStructurizrDslFile(children + Whitespace(next))
+                TokenId.WORKSPACE -> {
                     lexer.pushBack(next)
                     parseStructurizrDslFile(children + parseWorkspace())
                 }
@@ -37,12 +37,12 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in workspace node")
             else -> when (next.tokenId) {
-                TokenIds.workspace -> {
+                TokenId.WORKSPACE -> {
                     lexer.pushBack(next)
                     parseWorkspace(children + parseWorkspaceDefinition())
                 }
 
-                TokenIds.openBrace -> {
+                TokenId.OPEN_BRACE -> {
                     lexer.pushBack(next)
                     WorkspaceNode(children + parseWorkspaceBlock())
                 }
@@ -53,17 +53,27 @@ class StructurizrParser {
     }
 
     /**
-     * workspaceDefinition = WORKSPACE WHITESPACE*
+     * workspaceDefinition = WORKSPACE name? description? WHITESPACE*
      */
     private tailrec fun parseWorkspaceDefinition(
-        children: List<AstNode> = listOf()
+        children: List<AstNode> = listOf(),
+        nameFound: Boolean = false,
     ): WorkspaceDefinition {
         return when (val next = lexer.next()) {
             null -> throw Exception()
             else -> when (next.tokenId) {
-                TokenIds.workspace -> parseWorkspaceDefinition(children + WorkspaceKeyword(next))
-                TokenIds.whitespace -> parseWorkspaceDefinition(children + Whitespace(next))
-                TokenIds.openBrace -> {
+                TokenId.WORKSPACE -> parseWorkspaceDefinition(children + WorkspaceKeyword(next), nameFound = nameFound)
+                TokenId.STRING, TokenId.IDENTIFIER -> {
+                    lexer.pushBack(next)
+                    if (!nameFound) {
+                        parseWorkspaceDefinition(children + parseName(), nameFound = true)
+                    } else {
+                        parseWorkspaceDefinition(children + parseDescription(), nameFound)
+                    }
+                }
+
+                TokenId.WHITESPACE -> parseWorkspaceDefinition(children + Whitespace(next), nameFound)
+                TokenId.OPEN_BRACE -> {
                     lexer.pushBack(next)
                     WorkspaceDefinition(children)
                 }
@@ -80,10 +90,10 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in workspace block")
             else -> when (next.tokenId) {
-                TokenIds.whitespace -> parseWorkspaceBlock(children + Whitespace(next))
-                TokenIds.openBrace -> parseWorkspaceBlock(children + OpenBrace(next))
-                TokenIds.closeBrace -> WorkspaceBlock(children + CloseBrace(next))
-                TokenIds.model -> {
+                TokenId.WHITESPACE -> parseWorkspaceBlock(children + Whitespace(next))
+                TokenId.OPEN_BRACE -> parseWorkspaceBlock(children + OpenBrace(next))
+                TokenId.CLOSE_BRACE -> WorkspaceBlock(children + CloseBrace(next))
+                TokenId.MODEL -> {
                     lexer.pushBack(next)
                     parseWorkspaceBlock(children + parseModel())
                 }
@@ -100,12 +110,12 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the model")
             else -> when (next.tokenId) {
-                TokenIds.model -> {
+                TokenId.MODEL -> {
                     lexer.pushBack(next)
                     parseModel(children + parseModelDefinition())
                 }
 
-                TokenIds.openBrace -> {
+                TokenId.OPEN_BRACE -> {
                     lexer.pushBack(next)
                     ModelNode(children + parseModelSystems())
                 }
@@ -122,9 +132,9 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the model definition")
             else -> when (next.tokenId) {
-                TokenIds.model -> parseModelDefinition(children + ModelKeyword(next))
-                TokenIds.whitespace -> parseModelDefinition(children + Whitespace(next))
-                TokenIds.openBrace -> {
+                TokenId.MODEL -> parseModelDefinition(children + ModelKeyword(next))
+                TokenId.WHITESPACE -> parseModelDefinition(children + Whitespace(next))
+                TokenId.OPEN_BRACE -> {
                     lexer.pushBack(next)
                     ModelDefinition(children)
                 }
@@ -141,10 +151,10 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the model block")
             else -> when (next.tokenId) {
-                TokenIds.openBrace -> parseModelSystems(children + OpenBrace(next))
-                TokenIds.whitespace -> parseModelSystems(children + Whitespace(next))
-                TokenIds.closeBrace -> ModelSystems(children + CloseBrace(next))
-                TokenIds.person -> {
+                TokenId.OPEN_BRACE -> parseModelSystems(children + OpenBrace(next))
+                TokenId.WHITESPACE -> parseModelSystems(children + Whitespace(next))
+                TokenId.CLOSE_BRACE -> ModelSystems(children + CloseBrace(next))
+                TokenId.PERSON -> {
                     lexer.pushBack(next)
                     parseModelSystems(children + parsePersonDeclaration())
                 }
@@ -161,9 +171,9 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the person declaration")
             else -> when (next.tokenId) {
-                TokenIds.person -> parsePersonDeclaration(children + PersonKeyword(next))
-                TokenIds.whitespace -> parsePersonDeclaration(children + Whitespace(next))
-                TokenIds.identifier -> {
+                TokenId.PERSON -> parsePersonDeclaration(children + PersonKeyword(next))
+                TokenId.WHITESPACE -> parsePersonDeclaration(children + Whitespace(next))
+                TokenId.IDENTIFIER -> {
                     lexer.pushBack(next)
                     PersonDeclaration(children + parseName())
                 }
@@ -174,14 +184,29 @@ class StructurizrParser {
     }
 
     /**
-     * name = IDENTIFIER
+     * name = IDENTIFIER | STRING
      */
     private fun parseName(): Name {
         return when (val next = lexer.next()) {
             null -> throw Exception("Missing tokens in the name")
             else -> when (next.tokenId) {
-                TokenIds.identifier -> Name(next)
+                TokenId.IDENTIFIER -> Name(next)
+                TokenId.STRING -> Name(next)
                 else -> throw Exception("Unexpected token in name : ${next.tokenId}")
+            }
+        }
+    }
+
+    /**
+     * description = IDENTIFIER | STRING
+     */
+    private fun parseDescription(): Description {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Missing tokens in the description")
+            else -> when (next.tokenId) {
+                TokenId.IDENTIFIER -> Description(next)
+                TokenId.STRING -> Description(next)
+                else -> throw Exception("Unexpected token in description : ${next.tokenId}")
             }
         }
     }

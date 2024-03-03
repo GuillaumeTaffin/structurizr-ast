@@ -22,7 +22,7 @@ class LexerTests {
 
         lexer.hasNext() shouldBe true
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "WhitespaceToken",
+            tokenId = TokenId.WHITESPACE,
             text,
             Coordinates(
                 lineStart = 0,
@@ -40,7 +40,7 @@ class LexerTests {
 
         lexer.hasNext() shouldBe true
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "WorkspaceKeywordToken",
+            tokenId = TokenId.WORKSPACE,
             text,
             Coordinates(
                 lineStart = 0,
@@ -58,7 +58,7 @@ class LexerTests {
 
         lexer.hasNext() shouldBe true
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "WhitespaceToken",
+            tokenId = TokenId.WHITESPACE,
             text = "\t \n  ",
             Coordinates(
                 lineStart = 0,
@@ -70,7 +70,7 @@ class LexerTests {
 
         lexer.hasNext() shouldBe true
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "WorkspaceKeywordToken",
+            tokenId = TokenId.WORKSPACE,
             text = "workspace",
             Coordinates(
                 lineStart = 1,
@@ -82,7 +82,7 @@ class LexerTests {
 
         lexer.hasNext() shouldBe true
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "WhitespaceToken",
+            tokenId = TokenId.WHITESPACE,
             text = "  ",
             Coordinates(
                 lineStart = 1,
@@ -101,7 +101,7 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "OpenBraceToken",
+            tokenId = TokenId.OPEN_BRACE,
             text = "{",
             coordinates = Coordinates(
                 lineStart = 0,
@@ -111,7 +111,7 @@ class LexerTests {
             )
         )
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "CloseBraceToken",
+            tokenId = TokenId.CLOSE_BRACE,
             text = "}",
             coordinates = Coordinates(
                 lineStart = 0,
@@ -128,7 +128,7 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "ModelKeywordToken",
+            tokenId = TokenId.MODEL,
             text = text,
             coordinates = Coordinates(
                 lineStart = 0,
@@ -140,12 +140,12 @@ class LexerTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["michel", "_5o5o"])
+    @ValueSource(strings = ["michel", "_5o5o", "my-company"])
     fun `Identifier token`(text: String) {
         val lexer = StructurizrLexer(text)
 
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "IdentifierToken",
+            tokenId = TokenId.IDENTIFIER,
             text = text,
             coordinates = Coordinates(
                 lineStart = 0,
@@ -161,7 +161,7 @@ class LexerTests {
         val lexer = StructurizrLexer("=")
 
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "AssignOperatorToken",
+            tokenId = TokenId.ASSIGN_OPERATOR,
             text = "=",
             coordinates = Coordinates(
                 lineStart = 0,
@@ -178,13 +178,30 @@ class LexerTests {
         val lexer = StructurizrLexer(text)
 
         lexer.next() shouldBe StructurizrToken(
-            tokenId = "PersonKeywordToken",
+            tokenId = TokenId.PERSON,
             text = text,
             coordinates = Coordinates(
                 lineStart = 0,
                 lineEnd = 0,
                 colStart = 0,
                 colEnd = 5,
+            )
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["\"person\"", "\"My company as a workspace !\""])
+    fun `String token`(text: String) {
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = TokenId.STRING,
+            text = text,
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = text.length - 1,
             )
         )
     }

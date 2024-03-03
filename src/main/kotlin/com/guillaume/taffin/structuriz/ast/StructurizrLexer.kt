@@ -16,12 +16,12 @@ class StructurizrLexer(private val text: String) {
 
         if (tokenFifo.isNotEmpty()) return tokenFifo.removeFirst()
 
-        for ((pattern, constructor) in patternSpec) {
-            pattern.matchAt(text, charPointer)?.let {
+        for (tokenId in TokenId.entries) {
+            tokenId.regex.matchAt(text, charPointer)?.let {
                 return if (it.value.lines().size == 1) {
-                    makeSingleLineTokenAndMove(it.value, constructor)
+                    makeSingleLineTokenAndMove(it.value, tokenId.token())
                 } else {
-                    makeMultilineTokenAndMove(it.value, constructor)
+                    makeMultilineTokenAndMove(it.value, tokenId.token())
                 }
             }
         }
@@ -77,26 +77,21 @@ class StructurizrLexer(private val text: String) {
     }
 }
 
-val patternSpec: Array<Pair<Regex, TokenConstructor>> = arrayOf(
-    keywordRegex("workspace") to token(TokenIds.workspace),
-    keywordRegex("model") to token(TokenIds.model),
-    keywordRegex("person") to token(TokenIds.person),
-    Regex("\\{") to token(TokenIds.openBrace),
-    Regex("}") to token(TokenIds.closeBrace),
-    Regex("=") to token(TokenIds.assignOperator),
-    Regex("\\w[a-zA-Z0-9_-]*") to token(TokenIds.identifier),
-    Regex("\\s+") to token(TokenIds.whitespace),
-)
+enum class TokenId(val regex: Regex) {
+    WORKSPACE(keywordRegex("workspace")),
+    MODEL(keywordRegex("model")),
+    PERSON(keywordRegex("person")),
+    OPEN_BRACE(Regex("\\{")),
+    CLOSE_BRACE(Regex("}")),
+    ASSIGN_OPERATOR(Regex("=")),
+    IDENTIFIER(Regex("\\w[a-zA-Z0-9_-]*")),
+    STRING(Regex("\".*\"")),
+    WHITESPACE(Regex("\\s+")),
+    ;
 
-object TokenIds {
-    const val workspace = "WorkspaceKeywordToken"
-    const val model = "ModelKeywordToken"
-    const val person = "PersonKeywordToken"
-    const val openBrace = "OpenBraceToken"
-    const val closeBrace = "CloseBraceToken"
-    const val assignOperator = "AssignOperatorToken"
-    const val identifier = "IdentifierToken"
-    const val whitespace = "WhitespaceToken"
+    fun token(): TokenConstructor = { text, coordinates ->
+        StructurizrToken(this, text, coordinates)
+    }
 }
 
 typealias TokenConstructor = (String, Coordinates) -> StructurizrToken
@@ -111,11 +106,7 @@ data class Coordinates(
 )
 
 data class StructurizrToken(
-    val tokenId: String,
+    val tokenId: TokenId,
     val text: String,
     val coordinates: Coordinates,
 )
-
-fun token(id: String): TokenConstructor = { text, coordinates ->
-    StructurizrToken(id, text, coordinates)
-}

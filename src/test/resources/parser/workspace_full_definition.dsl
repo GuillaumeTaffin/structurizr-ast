@@ -1,0 +1,1 @@
+workspace my-company "My company as a workspace !" {}

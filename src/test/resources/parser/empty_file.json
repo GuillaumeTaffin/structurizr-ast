@@ -2,7 +2,7 @@
   "children": [
     {
       "token": {
-        "tokenId": "WhitespaceToken",
+        "tokenId": "WHITESPACE",
         "text": "\n\n\n",
         "coordinates": {
           "lineStart": 0,

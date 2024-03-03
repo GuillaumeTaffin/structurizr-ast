@@ -35,3 +35,5 @@ class PersonDeclaration(children: List<AstNode>) : AstNode(children)
 class PersonKeyword(token: StructurizrToken) : AstLeaf(token)
 
 class Name(token: StructurizrToken) : AstLeaf(token)
+
+class Description(token: StructurizrToken) : AstLeaf(token)

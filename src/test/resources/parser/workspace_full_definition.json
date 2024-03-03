@@ -1,0 +1,132 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "WORKSPACE",
+                "text": "workspace",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 0,
+                  "colEnd": 8
+                }
+              },
+              "children": [],
+              "type": "WorkspaceKeyword"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 9,
+                  "colEnd": 9
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
+                "tokenId": "IDENTIFIER",
+                "text": "my-company",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 10,
+                  "colEnd": 19
+                }
+              },
+              "children": [],
+              "type": "Name"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 20,
+                  "colEnd": 20
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
+                "tokenId": "STRING",
+                "text": "\"My company as a workspace !\"",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 21,
+                  "colEnd": 49
+                }
+              },
+              "children": [],
+              "type": "Description"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 50,
+                  "colEnd": 50
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            }
+          ],
+          "type": "WorkspaceDefinition"
+        },
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "OPEN_BRACE",
+                "text": "{",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 51,
+                  "colEnd": 51
+                }
+              },
+              "children": [],
+              "type": "OpenBrace"
+            },
+            {
+              "token": {
+                "tokenId": "CLOSE_BRACE",
+                "text": "}",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 52,
+                  "colEnd": 52
+                }
+              },
+              "children": [],
+              "type": "CloseBrace"
+            }
+          ],
+          "type": "WorkspaceBlock"
+        }
+      ],
+      "type": "WorkspaceNode"
+    }
+  ],
+  "type": "StructurizrDslFile"
+}
