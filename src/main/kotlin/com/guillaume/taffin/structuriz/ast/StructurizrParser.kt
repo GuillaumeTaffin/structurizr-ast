@@ -4,10 +4,12 @@ package com.guillaume.taffin.structuriz.ast
 class StructurizrParser {
 
     private lateinit var lexer: StructurizrLexer
+    private lateinit var diagnostics: MutableList<Diagnostic>
 
-    fun parse(dsl: String): AstNode {
+    fun parse(dsl: String): ParsedTree {
         lexer = StructurizrLexer(dsl)
-        return parseStructurizrDslFile()
+        diagnostics = mutableListOf()
+        return ValidTree(root = parseStructurizrDslFile())
     }
 
     /**
