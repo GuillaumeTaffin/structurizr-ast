@@ -13,17 +13,17 @@ class StructurizrParser {
     /**
      * file = WHITESPACE* workspace WHITESPACE*
      */
-    private tailrec fun parseStructurizrDslFile(currentLevelChildren: List<AstNode> = listOf()): StructurizrDslFile {
+    private tailrec fun parseStructurizrDslFile(children: List<AstNode> = listOf()): StructurizrDslFile {
         return when (val next = lexer.next()) {
-            null -> StructurizrDslFile(currentLevelChildren)
+            null -> StructurizrDslFile(children)
             else -> when (next.tokenId) {
-                TokenIds.whitespace -> parseStructurizrDslFile(currentLevelChildren + Whitespace(next))
+                TokenIds.whitespace -> parseStructurizrDslFile(children + Whitespace(next))
                 TokenIds.workspace -> {
                     lexer.pushBack(next)
-                    parseStructurizrDslFile(currentLevelChildren + parseWorkspace())
+                    parseStructurizrDslFile(children + parseWorkspace())
                 }
 
-                else -> StructurizrDslFile(currentLevelChildren)
+                else -> StructurizrDslFile(children)
             }
         }
     }
