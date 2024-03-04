@@ -189,7 +189,7 @@ class StructurizrParser {
                     parseModelSystems(children + parsePersonDeclaration())
                 }
 
-                else -> throw Exception("Unexpected token in model block : ${next.tokenId}")
+                else -> throw Exception("Unexpected token in model block : $next")
             }
         }
     }
@@ -203,40 +203,8 @@ class StructurizrParser {
             else -> when (next.tokenId) {
                 TokenId.PERSON -> parsePersonDeclaration(children + PersonKeyword(next))
                 TokenId.WHITESPACE -> parsePersonDeclaration(children + Whitespace(next))
-                TokenId.IDENTIFIER -> {
-                    lexer.pushBack(next)
-                    PersonDeclaration(children + parseName())
-                }
-
+                TokenId.IDENTIFIER, TokenId.STRING -> PersonDeclaration(children + Name(next))
                 else -> throw Exception("Unexpected token in person declaration : ${next.tokenId}")
-            }
-        }
-    }
-
-    /**
-     * name = IDENTIFIER | STRING
-     */
-    private fun parseName(): Name {
-        return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the name")
-            else -> when (next.tokenId) {
-                TokenId.IDENTIFIER -> Name(next)
-                TokenId.STRING -> Name(next)
-                else -> throw Exception("Unexpected token in name : ${next.tokenId}")
-            }
-        }
-    }
-
-    /**
-     * description = IDENTIFIER | STRING
-     */
-    private fun parseDescription(): Description {
-        return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the description")
-            else -> when (next.tokenId) {
-                TokenId.IDENTIFIER -> Description(next)
-                TokenId.STRING -> Description(next)
-                else -> throw Exception("Unexpected token in description : ${next.tokenId}")
             }
         }
     }
