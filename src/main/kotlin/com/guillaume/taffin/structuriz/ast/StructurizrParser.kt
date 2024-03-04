@@ -47,7 +47,9 @@ class StructurizrParser {
                     WorkspaceNode(children + parseWorkspaceBlock())
                 }
 
-                else -> throw Exception("Unexpected token in workspace : ${next.tokenId}")
+                TokenId.WHITESPACE -> parseWorkspace(children + Whitespace(next))
+
+                else -> throw Exception("Unexpected token in workspace : $next")
             }
         }
     }
@@ -62,13 +64,21 @@ class StructurizrParser {
         return when (val next = lexer.next()) {
             null -> WorkspaceDefinition(children)
             else -> when (next.tokenId) {
-                TokenId.WORKSPACE -> parseWorkspaceDefinition(children + WorkspaceKeyword(next), nameFound = nameFound)
+                TokenId.WORKSPACE -> parseWorkspaceDefinition(
+                    children + WorkspaceKeyword(next),
+                    nameFound = nameFound,
+                )
+
+                TokenId.EXTENDS -> {
+                    if (nameFound) throw Exception("Extends keyword not allowed after defining the name of the workspace")
+                    WorkspaceDefinition(children + ExtendsKeyword(next) + parserWhitespace() + parseFileUrl())
+                }
+
                 TokenId.STRING, TokenId.IDENTIFIER -> {
-                    lexer.pushBack(next)
                     if (!nameFound) {
-                        parseWorkspaceDefinition(children + parseName(), nameFound = true)
+                        parseWorkspaceDefinition(children + Name(next), nameFound = true)
                     } else {
-                        parseWorkspaceDefinition(children + parseDescription(), nameFound)
+                        WorkspaceDefinition(children + Description(next))
                     }
                 }
 
@@ -79,6 +89,26 @@ class StructurizrParser {
                 }
 
                 else -> throw Exception("Unexpected token in workspace definition : $next")
+            }
+        }
+    }
+
+    private fun parseFileUrl(): FileUrl {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting <file|url> but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.STRING, TokenId.IDENTIFIER -> FileUrl(next)
+                else -> throw Exception("Expecting <file|url> but found $next")
+            }
+        }
+    }
+
+    private fun parserWhitespace(): Whitespace {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting WHITESPACE but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.WHITESPACE -> Whitespace(next)
+                else -> throw Exception("Expecting WHITESPACE but found $next")
             }
         }
     }

@@ -81,6 +81,7 @@ enum class TokenId(val regex: Regex) {
     WORKSPACE(keywordRegex("workspace")),
     MODEL(keywordRegex("model")),
     PERSON(keywordRegex("person")),
+    EXTENDS(Regex("extends")),
     OPEN_BRACE(Regex("\\{")),
     CLOSE_BRACE(Regex("}")),
     ASSIGN_OPERATOR(Regex("=")),

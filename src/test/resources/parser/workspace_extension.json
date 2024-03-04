@@ -34,17 +34,17 @@
             },
             {
               "token": {
-                "tokenId": "IDENTIFIER",
-                "text": "my-company",
+                "tokenId": "EXTENDS",
+                "text": "extends",
                 "coordinates": {
                   "lineStart": 0,
                   "lineEnd": 0,
                   "colStart": 10,
-                  "colEnd": 19
+                  "colEnd": 16
                 }
               },
               "children": [],
-              "type": "Name"
+              "type": "ExtendsKeyword"
             },
             {
               "token": {
@@ -53,8 +53,8 @@
                 "coordinates": {
                   "lineStart": 0,
                   "lineEnd": 0,
-                  "colStart": 20,
-                  "colEnd": 20
+                  "colStart": 17,
+                  "colEnd": 17
                 }
               },
               "children": [],
@@ -63,16 +63,16 @@
             {
               "token": {
                 "tokenId": "STRING",
-                "text": "\"My company as a workspace !\"",
+                "text": "\"./other-workspace.dsl\"",
                 "coordinates": {
                   "lineStart": 0,
                   "lineEnd": 0,
-                  "colStart": 21,
-                  "colEnd": 49
+                  "colStart": 18,
+                  "colEnd": 40
                 }
               },
               "children": [],
-              "type": "Description"
+              "type": "FileUrl"
             }
           ],
           "type": "WorkspaceDefinition"
@@ -84,8 +84,8 @@
             "coordinates": {
               "lineStart": 0,
               "lineEnd": 0,
-              "colStart": 50,
-              "colEnd": 50
+              "colStart": 41,
+              "colEnd": 41
             }
           },
           "children": [],
@@ -100,8 +100,8 @@
                 "coordinates": {
                   "lineStart": 0,
                   "lineEnd": 0,
-                  "colStart": 51,
-                  "colEnd": 51
+                  "colStart": 42,
+                  "colEnd": 42
                 }
               },
               "children": [],
@@ -109,13 +109,27 @@
             },
             {
               "token": {
+                "tokenId": "WHITESPACE",
+                "text": "\n\n",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 2,
+                  "colStart": 43,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
                 "tokenId": "CLOSE_BRACE",
                 "text": "}",
                 "coordinates": {
-                  "lineStart": 0,
-                  "lineEnd": 0,
-                  "colStart": 52,
-                  "colEnd": 52
+                  "lineStart": 2,
+                  "lineEnd": 2,
+                  "colStart": 0,
+                  "colEnd": 0
                 }
               },
               "children": [],

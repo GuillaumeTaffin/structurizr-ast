@@ -205,4 +205,20 @@ class LexerTests {
             )
         )
     }
+
+    @Test
+    fun `extends token`() {
+        val lexer = StructurizrLexer("extends")
+
+        lexer.next() shouldBe StructurizrToken(
+            tokenId = TokenId.EXTENDS,
+            text = "extends",
+            coordinates = Coordinates(
+                lineStart = 0,
+                lineEnd = 0,
+                colStart = 0,
+                colEnd = 6,
+            )
+        )
+    }
 }

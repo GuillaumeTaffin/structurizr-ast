@@ -24,6 +24,8 @@ class CloseBrace(token: StructurizrToken) : AstLeaf(token)
 
 class WorkspaceKeyword(token: StructurizrToken) : AstLeaf(token)
 
+class ExtendsKeyword(token: StructurizrToken) : AstLeaf(token)
+
 class ModelDefinition(children: List<AstNode>) : AstNode(children)
 
 class ModelKeyword(token: StructurizrToken) : AstLeaf(token)
@@ -37,3 +39,5 @@ class PersonKeyword(token: StructurizrToken) : AstLeaf(token)
 class Name(token: StructurizrToken) : AstLeaf(token)
 
 class Description(token: StructurizrToken) : AstLeaf(token)
+
+class FileUrl(token: StructurizrToken) : AstLeaf(token)
