@@ -32,7 +32,7 @@ class ModelKeyword(token: StructurizrToken) : AstLeaf(token)
 
 class ModelSystems(children: List<AstNode>) : AstNode(children)
 
-class PersonDeclaration(children: List<AstNode>) : AstNode(children)
+class PersonStatement(children: List<AstNode>) : AstNode(children)
 
 class PersonKeyword(token: StructurizrToken) : AstLeaf(token)
 
@@ -41,3 +41,5 @@ class Name(token: StructurizrToken) : AstLeaf(token)
 class Description(token: StructurizrToken) : AstLeaf(token)
 
 class FileUrl(token: StructurizrToken) : AstLeaf(token)
+
+class ModelStatements(children: List<AstNode>) : AstNode(children)

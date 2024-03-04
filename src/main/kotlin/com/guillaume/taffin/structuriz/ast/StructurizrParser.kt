@@ -71,7 +71,7 @@ class StructurizrParser {
 
                 TokenId.EXTENDS -> {
                     if (nameFound) throw Exception("Extends keyword not allowed after defining the name of the workspace")
-                    WorkspaceDefinition(children + ExtendsKeyword(next) + parserWhitespace() + parseFileUrl())
+                    WorkspaceDefinition(children + ExtendsKeyword(next) + parseWhitespace() + parseFileUrl())
                 }
 
                 TokenId.STRING, TokenId.IDENTIFIER -> {
@@ -103,7 +103,7 @@ class StructurizrParser {
         }
     }
 
-    private fun parserWhitespace(): Whitespace {
+    private fun parseWhitespace(): Whitespace {
         return when (val next = lexer.next()) {
             null -> throw Exception("Expecting WHITESPACE but found nothing")
             else -> when (next.tokenId) {
@@ -124,8 +124,7 @@ class StructurizrParser {
                 TokenId.OPEN_BRACE -> parseWorkspaceBlock(children + OpenBrace(next))
                 TokenId.CLOSE_BRACE -> WorkspaceBlock(children + CloseBrace(next))
                 TokenId.MODEL -> {
-                    lexer.pushBack(next)
-                    parseWorkspaceBlock(children + parseModel())
+                    parseWorkspaceBlock(children + parseModel(ModelKeyword(next)))
                 }
 
                 else -> throw Exception("Unexpected token in workspace block : ${next.tokenId}")
@@ -136,77 +135,66 @@ class StructurizrParser {
     /**
      * model = modelDefinition modelSystems
      */
-    private tailrec fun parseModel(children: List<AstNode> = listOf()): ModelNode {
-        return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the model")
-            else -> when (next.tokenId) {
-                TokenId.MODEL -> {
-                    lexer.pushBack(next)
-                    parseModel(children + parseModelDefinition())
-                }
-
-                TokenId.OPEN_BRACE -> {
-                    lexer.pushBack(next)
-                    ModelNode(children + parseModelSystems())
-                }
-
-                else -> throw Exception("Unexpected token in model : ${next.tokenId}")
-            }
-        }
-    }
-
-    /**
-     * modelDefinition = MODEL WHITESPACE*
-     */
-    private tailrec fun parseModelDefinition(children: List<AstNode> = listOf()): ModelDefinition {
-        return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the model definition")
-            else -> when (next.tokenId) {
-                TokenId.MODEL -> parseModelDefinition(children + ModelKeyword(next))
-                TokenId.WHITESPACE -> parseModelDefinition(children + Whitespace(next))
-                TokenId.OPEN_BRACE -> {
-                    lexer.pushBack(next)
-                    ModelDefinition(children)
-                }
-
-                else -> throw Exception("Unexpected token in model definition : ${next.tokenId}")
-            }
-        }
+    private fun parseModel(keyword: ModelKeyword): ModelNode {
+        return ModelNode(listOf(keyword, parseWhitespace(), parseModelSystems()))
     }
 
     /**
      * modelSystems = { WHITESPACE* personDeclaration }
      */
-    private tailrec fun parseModelSystems(children: List<AstNode> = listOf()): ModelSystems {
+    private fun parseModelSystems(): ModelSystems {
+        return ModelSystems(listOf(parseOpenBrace(), parseModelStatements(), parseClosingBrace()))
+    }
+
+    private fun parseOpenBrace(): OpenBrace {
         return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the model block")
+            null -> throw Exception("Expecting '{' but found nothing")
             else -> when (next.tokenId) {
-                TokenId.OPEN_BRACE -> parseModelSystems(children + OpenBrace(next))
-                TokenId.WHITESPACE -> parseModelSystems(children + Whitespace(next))
-                TokenId.CLOSE_BRACE -> ModelSystems(children + CloseBrace(next))
-                TokenId.PERSON -> {
+                TokenId.OPEN_BRACE -> OpenBrace(next)
+                else -> throw Exception("Expecting '{' but found $next")
+            }
+        }
+    }
+
+    private fun parseClosingBrace(): CloseBrace {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting '}' but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.CLOSE_BRACE -> CloseBrace(next)
+                else -> throw Exception("Expecting '}' but found $next")
+            }
+        }
+    }
+
+    private fun parseModelStatements(children: List<AstNode> = listOf()): ModelStatements {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting model statements or '}' but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.WHITESPACE -> parseModelStatements(children + Whitespace(next))
+                TokenId.PERSON -> parseModelStatements(children + parsePersonStatement(PersonKeyword(next)))
+                TokenId.CLOSE_BRACE -> {
                     lexer.pushBack(next)
-                    parseModelSystems(children + parsePersonDeclaration())
+                    ModelStatements(children)
                 }
 
-                else -> throw Exception("Unexpected token in model block : $next")
+                else -> throw Exception("Expecting '}' but found $next")
             }
         }
     }
 
-    /**
-     * personDeclaration = PERSON WHITESPACE* name
-     */
-    private tailrec fun parsePersonDeclaration(children: List<AstNode> = listOf()): PersonDeclaration {
+    private fun parsePersonStatement(keyword: PersonKeyword): PersonStatement {
+        return PersonStatement(listOf(keyword, parseWhitespace(), parseName()))
+    }
+
+    private fun parseName(): Name {
         return when (val next = lexer.next()) {
-            null -> throw Exception("Missing tokens in the person declaration")
+            null -> throw Exception("Expecting name but found nothing")
             else -> when (next.tokenId) {
-                TokenId.PERSON -> parsePersonDeclaration(children + PersonKeyword(next))
-                TokenId.WHITESPACE -> parsePersonDeclaration(children + Whitespace(next))
-                TokenId.IDENTIFIER, TokenId.STRING -> PersonDeclaration(children + Name(next))
-                else -> throw Exception("Unexpected token in person declaration : ${next.tokenId}")
+                TokenId.IDENTIFIER, TokenId.STRING -> Name(next)
+                else -> throw Exception("Expecting name but found $next")
             }
         }
     }
+
 
 }

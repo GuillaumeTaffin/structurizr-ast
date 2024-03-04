@@ -68,37 +68,32 @@
             {
               "children": [
                 {
-                  "children": [
-                    {
-                      "token": {
-                        "tokenId": "MODEL",
-                        "text": "model",
-                        "coordinates": {
-                          "lineStart": 2,
-                          "lineEnd": 2,
-                          "colStart": 4,
-                          "colEnd": 8
-                        }
-                      },
-                      "children": [],
-                      "type": "ModelKeyword"
-                    },
-                    {
-                      "token": {
-                        "tokenId": "WHITESPACE",
-                        "text": " ",
-                        "coordinates": {
-                          "lineStart": 2,
-                          "lineEnd": 2,
-                          "colStart": 9,
-                          "colEnd": 9
-                        }
-                      },
-                      "children": [],
-                      "type": "Whitespace"
+                  "token": {
+                    "tokenId": "MODEL",
+                    "text": "model",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 4,
+                      "colEnd": 8
                     }
-                  ],
-                  "type": "ModelDefinition"
+                  },
+                  "children": [],
+                  "type": "ModelKeyword"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 9,
+                      "colEnd": 9
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
                 },
                 {
                   "children": [
@@ -117,79 +112,84 @@
                       "type": "OpenBrace"
                     },
                     {
-                      "token": {
-                        "tokenId": "WHITESPACE",
-                        "text": "\n        ",
-                        "coordinates": {
-                          "lineStart": 2,
-                          "lineEnd": 3,
-                          "colStart": 11,
-                          "colEnd": 7
-                        }
-                      },
-                      "children": [],
-                      "type": "Whitespace"
-                    },
-                    {
                       "children": [
                         {
                           "token": {
-                            "tokenId": "PERSON",
-                            "text": "person",
-                            "coordinates": {
-                              "lineStart": 3,
-                              "lineEnd": 3,
-                              "colStart": 8,
-                              "colEnd": 13
-                            }
-                          },
-                          "children": [],
-                          "type": "PersonKeyword"
-                        },
-                        {
-                          "token": {
                             "tokenId": "WHITESPACE",
-                            "text": " ",
+                            "text": "\n        ",
                             "coordinates": {
-                              "lineStart": 3,
+                              "lineStart": 2,
                               "lineEnd": 3,
-                              "colStart": 14,
-                              "colEnd": 14
+                              "colStart": 11,
+                              "colEnd": 7
                             }
                           },
                           "children": [],
                           "type": "Whitespace"
                         },
                         {
+                          "children": [
+                            {
+                              "token": {
+                                "tokenId": "PERSON",
+                                "text": "person",
+                                "coordinates": {
+                                  "lineStart": 3,
+                                  "lineEnd": 3,
+                                  "colStart": 8,
+                                  "colEnd": 13
+                                }
+                              },
+                              "children": [],
+                              "type": "PersonKeyword"
+                            },
+                            {
+                              "token": {
+                                "tokenId": "WHITESPACE",
+                                "text": " ",
+                                "coordinates": {
+                                  "lineStart": 3,
+                                  "lineEnd": 3,
+                                  "colStart": 14,
+                                  "colEnd": 14
+                                }
+                              },
+                              "children": [],
+                              "type": "Whitespace"
+                            },
+                            {
+                              "token": {
+                                "tokenId": "IDENTIFIER",
+                                "text": "User",
+                                "coordinates": {
+                                  "lineStart": 3,
+                                  "lineEnd": 3,
+                                  "colStart": 15,
+                                  "colEnd": 18
+                                }
+                              },
+                              "children": [],
+                              "type": "Name"
+                            }
+                          ],
+                          "type": "PersonStatement"
+                        },
+                        {
                           "token": {
-                            "tokenId": "IDENTIFIER",
-                            "text": "User",
+                            "tokenId": "WHITESPACE",
+                            "text": "\n    ",
                             "coordinates": {
                               "lineStart": 3,
-                              "lineEnd": 3,
-                              "colStart": 15,
-                              "colEnd": 18
+                              "lineEnd": 4,
+                              "colStart": 19,
+                              "colEnd": 3
                             }
                           },
                           "children": [],
-                          "type": "Name"
+                          "type": "Whitespace"
                         }
                       ],
-                      "type": "PersonDeclaration"
-                    },
-                    {
-                      "token": {
-                        "tokenId": "WHITESPACE",
-                        "text": "\n    ",
-                        "coordinates": {
-                          "lineStart": 3,
-                          "lineEnd": 4,
-                          "colStart": 19,
-                          "colEnd": 3
-                        }
-                      },
-                      "children": [],
-                      "type": "Whitespace"
+                      "type": "ModelStatements"
                     },
                     {
                       "token": {
