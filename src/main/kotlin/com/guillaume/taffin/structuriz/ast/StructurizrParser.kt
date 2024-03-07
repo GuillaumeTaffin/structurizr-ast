@@ -130,7 +130,7 @@ class StructurizrParser {
                 TokenId.OPEN_BRACE -> parseWorkspaceBlock(children + OpenBrace(next))
                 TokenId.CLOSE_BRACE -> WorkspaceBlock(children + CloseBrace(next))
                 TokenId.MODEL -> parseWorkspaceBlock(children + parseModel(ModelKeyword(next)))
-                TokenId.NAME -> parseWorkspaceBlock(children + parseWorkspaceNameAssignation(Identifier(next)))
+                TokenId.NAME -> parseWorkspaceBlock(children + parseWorkspaceNameAssignment(Identifier(next)))
                 TokenId.DESCRIPTION -> parseWorkspaceBlock(
                     children + parseWorkspaceDescriptionAssignation(
                         Identifier(
@@ -139,14 +139,48 @@ class StructurizrParser {
                     )
                 )
 
+                TokenId.PROPERTIES -> parseWorkspaceBlock(children + parseProperties(PropertiesKeyword(next)))
+
 
                 else -> throw Exception("Unexpected token in workspace block : ${next.tokenId}")
             }
         }
     }
 
-    private fun parseWorkspaceNameAssignation(nameIdentifier: Identifier): WorkspaceNameAssignation {
-        return WorkspaceNameAssignation(
+    private fun parseProperties(keyword: PropertiesKeyword): Properties {
+        return Properties(
+            listOf(
+                keyword,
+                parseWhitespace(),
+                parseOpenBrace(),
+                parsePropertiesAssignment(),
+                parseClosingBrace()
+            )
+        )
+    }
+
+    private tailrec fun parsePropertiesAssignment(children: List<AstNode> = listOf()): PropertiesAssignment {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting properties but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.CLOSE_BRACE -> {
+                    lexer.pushBack(next); PropertiesAssignment(children)
+                }
+
+                TokenId.WHITESPACE -> parsePropertiesAssignment(children + Whitespace(next))
+                TokenId.IDENTIFIER -> parsePropertiesAssignment(children + parsePropertyAssignment(Identifier(next)))
+
+                else -> throw Exception("Expecting properties but found $next")
+            }
+        }
+    }
+
+    private fun parsePropertyAssignment(key: Identifier): PropertyAssignment {
+        return PropertyAssignment(listOf(key, parseWhitespace(), parseText(), parseNewLineWhitespace()))
+    }
+
+    private fun parseWorkspaceNameAssignment(nameIdentifier: Identifier): WorkspaceNameAssignment {
+        return WorkspaceNameAssignment(
             listOf(
                 nameIdentifier,
                 parseWhitespace(),
@@ -158,8 +192,8 @@ class StructurizrParser {
         )
     }
 
-    private fun parseWorkspaceDescriptionAssignation(descriptionId: Identifier): WorkspaceDescriptionAssignation {
-        return WorkspaceDescriptionAssignation(
+    private fun parseWorkspaceDescriptionAssignation(descriptionId: Identifier): WorkspaceDescriptionAssignment {
+        return WorkspaceDescriptionAssignment(
             listOf(
                 descriptionId,
                 parseWhitespace(),
@@ -233,6 +267,16 @@ class StructurizrParser {
 
     private fun parsePersonStatement(keyword: PersonKeyword): PersonStatement {
         return PersonStatement(listOf(keyword, parseWhitespace(), parseName()))
+    }
+
+    private fun parseText(): Text {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting string but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.IDENTIFIER, TokenId.STRING -> Text(next)
+                else -> throw Exception("Expecting string but found $next")
+            }
+        }
     }
 
     private fun parseName(): Name {

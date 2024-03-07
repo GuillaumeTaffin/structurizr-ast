@@ -152,7 +152,7 @@
                   "type": "Whitespace"
                 }
               ],
-              "type": "WorkspaceDescriptionAssignation"
+              "type": "WorkspaceDescriptionAssignment"
             },
             {
               "children": [
@@ -241,7 +241,7 @@
                   "type": "Whitespace"
                 }
               ],
-              "type": "WorkspaceNameAssignation"
+              "type": "WorkspaceNameAssignment"
             },
             {
               "token": {

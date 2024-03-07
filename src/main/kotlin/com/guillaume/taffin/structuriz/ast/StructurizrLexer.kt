@@ -82,6 +82,7 @@ enum class TokenId(val regex: Regex) {
     MODEL(keywordRegex("model")),
     PERSON(keywordRegex("person")),
     EXTENDS(Regex("extends")),
+    PROPERTIES(Regex("properties")),
     NAME(Regex("name")),
     DESCRIPTION(Regex("description")),
     OPEN_BRACE(Regex("\\{")),

@@ -1,0 +1,367 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "WORKSPACE",
+                "text": "workspace",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 0,
+                  "colEnd": 8
+                }
+              },
+              "children": [],
+              "type": "WorkspaceKeyword"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 9,
+                  "colEnd": 9
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            }
+          ],
+          "type": "WorkspaceDefinition"
+        },
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "OPEN_BRACE",
+                "text": "{",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 10,
+                  "colEnd": 10
+                }
+              },
+              "children": [],
+              "type": "OpenBrace"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": "\n    ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 1,
+                  "colStart": 11,
+                  "colEnd": 3
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "children": [
+                {
+                  "token": {
+                    "tokenId": "PROPERTIES",
+                    "text": "properties",
+                    "coordinates": {
+                      "lineStart": 1,
+                      "lineEnd": 1,
+                      "colStart": 4,
+                      "colEnd": 13
+                    }
+                  },
+                  "children": [],
+                  "type": "PropertiesKeyword"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 1,
+                      "lineEnd": 1,
+                      "colStart": 14,
+                      "colEnd": 14
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                },
+                {
+                  "token": {
+                    "tokenId": "OPEN_BRACE",
+                    "text": "{",
+                    "coordinates": {
+                      "lineStart": 1,
+                      "lineEnd": 1,
+                      "colStart": 15,
+                      "colEnd": 15
+                    }
+                  },
+                  "children": [],
+                  "type": "OpenBrace"
+                },
+                {
+                  "children": [
+                    {
+                      "token": {
+                        "tokenId": "WHITESPACE",
+                        "text": "\n        ",
+                        "coordinates": {
+                          "lineStart": 1,
+                          "lineEnd": 2,
+                          "colStart": 16,
+                          "colEnd": 7
+                        }
+                      },
+                      "children": [],
+                      "type": "Whitespace"
+                    },
+                    {
+                      "children": [
+                        {
+                          "token": {
+                            "tokenId": "IDENTIFIER",
+                            "text": "key1",
+                            "coordinates": {
+                              "lineStart": 2,
+                              "lineEnd": 2,
+                              "colStart": 8,
+                              "colEnd": 11
+                            }
+                          },
+                          "children": [],
+                          "type": "Identifier"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": " ",
+                            "coordinates": {
+                              "lineStart": 2,
+                              "lineEnd": 2,
+                              "colStart": 12,
+                              "colEnd": 12
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "STRING",
+                            "text": "\"value 1\"",
+                            "coordinates": {
+                              "lineStart": 2,
+                              "lineEnd": 2,
+                              "colStart": 13,
+                              "colEnd": 21
+                            }
+                          },
+                          "children": [],
+                          "type": "Text"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": "\n        ",
+                            "coordinates": {
+                              "lineStart": 2,
+                              "lineEnd": 3,
+                              "colStart": 22,
+                              "colEnd": 7
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        }
+                      ],
+                      "type": "PropertyAssignment"
+                    },
+                    {
+                      "children": [
+                        {
+                          "token": {
+                            "tokenId": "IDENTIFIER",
+                            "text": "key2",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 8,
+                              "colEnd": 11
+                            }
+                          },
+                          "children": [],
+                          "type": "Identifier"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": " ",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 12,
+                              "colEnd": 12
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "IDENTIFIER",
+                            "text": "value2",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 3,
+                              "colStart": 13,
+                              "colEnd": 18
+                            }
+                          },
+                          "children": [],
+                          "type": "Text"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": "\n\n        ",
+                            "coordinates": {
+                              "lineStart": 3,
+                              "lineEnd": 5,
+                              "colStart": 19,
+                              "colEnd": 7
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        }
+                      ],
+                      "type": "PropertyAssignment"
+                    },
+                    {
+                      "children": [
+                        {
+                          "token": {
+                            "tokenId": "IDENTIFIER",
+                            "text": "key3",
+                            "coordinates": {
+                              "lineStart": 5,
+                              "lineEnd": 5,
+                              "colStart": 8,
+                              "colEnd": 11
+                            }
+                          },
+                          "children": [],
+                          "type": "Identifier"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": " ",
+                            "coordinates": {
+                              "lineStart": 5,
+                              "lineEnd": 5,
+                              "colStart": 12,
+                              "colEnd": 12
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "IDENTIFIER",
+                            "text": "value3",
+                            "coordinates": {
+                              "lineStart": 5,
+                              "lineEnd": 5,
+                              "colStart": 13,
+                              "colEnd": 18
+                            }
+                          },
+                          "children": [],
+                          "type": "Text"
+                        },
+                        {
+                          "token": {
+                            "tokenId": "WHITESPACE",
+                            "text": "\n    ",
+                            "coordinates": {
+                              "lineStart": 5,
+                              "lineEnd": 6,
+                              "colStart": 19,
+                              "colEnd": 3
+                            }
+                          },
+                          "children": [],
+                          "type": "Whitespace"
+                        }
+                      ],
+                      "type": "PropertyAssignment"
+                    }
+                  ],
+                  "type": "PropertiesAssignment"
+                },
+                {
+                  "token": {
+                    "tokenId": "CLOSE_BRACE",
+                    "text": "}",
+                    "coordinates": {
+                      "lineStart": 6,
+                      "lineEnd": 6,
+                      "colStart": 4,
+                      "colEnd": 4
+                    }
+                  },
+                  "children": [],
+                  "type": "CloseBrace"
+                }
+              ],
+              "type": "Properties"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": "\n",
+                "coordinates": {
+                  "lineStart": 6,
+                  "lineEnd": 7,
+                  "colStart": 5,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "token": {
+                "tokenId": "CLOSE_BRACE",
+                "text": "}",
+                "coordinates": {
+                  "lineStart": 7,
+                  "lineEnd": 7,
+                  "colStart": 0,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "CloseBrace"
+            }
+          ],
+          "type": "WorkspaceBlock"
+        }
+      ],
+      "type": "WorkspaceNode"
+    }
+  ],
+  "type": "StructurizrDslFile"
+}

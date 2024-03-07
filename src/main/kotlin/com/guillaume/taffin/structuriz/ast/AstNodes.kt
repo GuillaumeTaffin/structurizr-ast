@@ -30,8 +30,6 @@ class WorkspaceKeyword(token: StructurizrToken) : AstLeaf(token)
 
 class ExtendsKeyword(token: StructurizrToken) : AstLeaf(token)
 
-class ModelDefinition(children: List<AstNode>) : AstNode(children)
-
 class ModelKeyword(token: StructurizrToken) : AstLeaf(token)
 
 class ModelSystems(children: List<AstNode>) : AstNode(children)
@@ -39,6 +37,8 @@ class ModelSystems(children: List<AstNode>) : AstNode(children)
 class PersonStatement(children: List<AstNode>) : AstNode(children)
 
 class PersonKeyword(token: StructurizrToken) : AstLeaf(token)
+
+class Text(token: StructurizrToken) : AstLeaf(token)
 
 class Name(token: StructurizrToken) : AstLeaf(token)
 
@@ -48,10 +48,18 @@ class FileUrl(token: StructurizrToken) : AstLeaf(token)
 
 class ModelStatements(children: List<AstNode>) : AstNode(children)
 
-class WorkspaceNameAssignation(children: List<AstNode>) : AstNode(children)
+class WorkspaceNameAssignment(children: List<AstNode>) : AstNode(children)
 
-class WorkspaceDescriptionAssignation(children: List<AstNode>) : AstNode(children)
+class WorkspaceDescriptionAssignment(children: List<AstNode>) : AstNode(children)
 
 class Identifier(token: StructurizrToken) : AstLeaf(token)
 
 class AssignOperator(token: StructurizrToken) : AstLeaf(token)
+
+class PropertiesKeyword(token: StructurizrToken) : AstLeaf(token)
+
+class Properties(children: List<AstNode>) : AstNode(children)
+
+class PropertiesAssignment(children: List<AstNode>) : AstNode(children)
+
+class PropertyAssignment(children: List<AstNode>) : AstNode(children)

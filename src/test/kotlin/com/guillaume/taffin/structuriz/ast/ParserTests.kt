@@ -20,6 +20,7 @@ class ParserTests {
             "parser/workspace_no_block.dsl",
             "parser/workspace_extension.dsl",
             "parser/workspace_assign_name_and_description.dsl",
+            "parser/workspace_properties.dsl",
         ]
     )
     fun `Valid workspace`(dslFile: String) {
