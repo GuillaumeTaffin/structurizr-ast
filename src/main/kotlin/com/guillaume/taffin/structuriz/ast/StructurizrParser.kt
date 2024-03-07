@@ -113,6 +113,12 @@ class StructurizrParser {
         }
     }
 
+    private fun parseNewLineWhitespace(): Whitespace {
+        return parseWhitespace().let {
+            if (it.containsNewLine()) it else throw Exception("Expecting new line character but got ${it.token}")
+        }
+    }
+
     /**
      * workspaceBlock = { WHITESPACE* model? WHITESPACE* }
      */
@@ -123,11 +129,54 @@ class StructurizrParser {
                 TokenId.WHITESPACE -> parseWorkspaceBlock(children + Whitespace(next))
                 TokenId.OPEN_BRACE -> parseWorkspaceBlock(children + OpenBrace(next))
                 TokenId.CLOSE_BRACE -> WorkspaceBlock(children + CloseBrace(next))
-                TokenId.MODEL -> {
-                    parseWorkspaceBlock(children + parseModel(ModelKeyword(next)))
-                }
+                TokenId.MODEL -> parseWorkspaceBlock(children + parseModel(ModelKeyword(next)))
+                TokenId.NAME -> parseWorkspaceBlock(children + parseWorkspaceNameAssignation(Identifier(next)))
+                TokenId.DESCRIPTION -> parseWorkspaceBlock(
+                    children + parseWorkspaceDescriptionAssignation(
+                        Identifier(
+                            next
+                        )
+                    )
+                )
+
 
                 else -> throw Exception("Unexpected token in workspace block : ${next.tokenId}")
+            }
+        }
+    }
+
+    private fun parseWorkspaceNameAssignation(nameIdentifier: Identifier): WorkspaceNameAssignation {
+        return WorkspaceNameAssignation(
+            listOf(
+                nameIdentifier,
+                parseWhitespace(),
+                parseAssignOperator(),
+                parseWhitespace(),
+                parseName(),
+                parseNewLineWhitespace()
+            )
+        )
+    }
+
+    private fun parseWorkspaceDescriptionAssignation(descriptionId: Identifier): WorkspaceDescriptionAssignation {
+        return WorkspaceDescriptionAssignation(
+            listOf(
+                descriptionId,
+                parseWhitespace(),
+                parseAssignOperator(),
+                parseWhitespace(),
+                parseDescription(),
+                parseNewLineWhitespace()
+            )
+        )
+    }
+
+    private fun parseAssignOperator(): AssignOperator {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting '=' but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.ASSIGN_OPERATOR -> AssignOperator(next)
+                else -> throw Exception("Expecting '=' but found $next")
             }
         }
     }
@@ -196,5 +245,14 @@ class StructurizrParser {
         }
     }
 
+    private fun parseDescription(): Description {
+        return when (val next = lexer.next()) {
+            null -> throw Exception("Expecting a description but found nothing")
+            else -> when (next.tokenId) {
+                TokenId.IDENTIFIER, TokenId.STRING -> Description(next)
+                else -> throw Exception("Expecting a description but found $next")
+            }
+        }
+    }
 
 }

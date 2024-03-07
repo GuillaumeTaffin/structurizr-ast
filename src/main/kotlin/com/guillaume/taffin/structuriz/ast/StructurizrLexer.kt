@@ -82,11 +82,13 @@ enum class TokenId(val regex: Regex) {
     MODEL(keywordRegex("model")),
     PERSON(keywordRegex("person")),
     EXTENDS(Regex("extends")),
+    NAME(Regex("name")),
+    DESCRIPTION(Regex("description")),
     OPEN_BRACE(Regex("\\{")),
     CLOSE_BRACE(Regex("}")),
     ASSIGN_OPERATOR(Regex("=")),
     IDENTIFIER(Regex("\\w[a-zA-Z0-9_-]*")),
-    STRING(Regex("\".*\"")),
+    STRING(Regex("\"[^\n\"]*\"")),
     WHITESPACE(Regex("\\s+")),
     ;
 

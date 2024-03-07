@@ -1,0 +1,268 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "WORKSPACE",
+                "text": "workspace",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 0,
+                  "colEnd": 8
+                }
+              },
+              "children": [],
+              "type": "WorkspaceKeyword"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": " ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 9,
+                  "colEnd": 9
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            }
+          ],
+          "type": "WorkspaceDefinition"
+        },
+        {
+          "children": [
+            {
+              "token": {
+                "tokenId": "OPEN_BRACE",
+                "text": "{",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 0,
+                  "colStart": 10,
+                  "colEnd": 10
+                }
+              },
+              "children": [],
+              "type": "OpenBrace"
+            },
+            {
+              "token": {
+                "tokenId": "WHITESPACE",
+                "text": "\n\n    ",
+                "coordinates": {
+                  "lineStart": 0,
+                  "lineEnd": 2,
+                  "colStart": 11,
+                  "colEnd": 3
+                }
+              },
+              "children": [],
+              "type": "Whitespace"
+            },
+            {
+              "children": [
+                {
+                  "token": {
+                    "tokenId": "DESCRIPTION",
+                    "text": "description",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 4,
+                      "colEnd": 14
+                    }
+                  },
+                  "children": [],
+                  "type": "Identifier"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 15,
+                      "colEnd": 15
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                },
+                {
+                  "token": {
+                    "tokenId": "ASSIGN_OPERATOR",
+                    "text": "\u003d",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 16,
+                      "colEnd": 16
+                    }
+                  },
+                  "children": [],
+                  "type": "AssignOperator"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 17,
+                      "colEnd": 17
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                },
+                {
+                  "token": {
+                    "tokenId": "STRING",
+                    "text": "\"Some new description\"",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 2,
+                      "colStart": 18,
+                      "colEnd": 39
+                    }
+                  },
+                  "children": [],
+                  "type": "Description"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": "\n    ",
+                    "coordinates": {
+                      "lineStart": 2,
+                      "lineEnd": 3,
+                      "colStart": 40,
+                      "colEnd": 3
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                }
+              ],
+              "type": "WorkspaceDescriptionAssignation"
+            },
+            {
+              "children": [
+                {
+                  "token": {
+                    "tokenId": "NAME",
+                    "text": "name",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 3,
+                      "colStart": 4,
+                      "colEnd": 7
+                    }
+                  },
+                  "children": [],
+                  "type": "Identifier"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 3,
+                      "colStart": 8,
+                      "colEnd": 8
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                },
+                {
+                  "token": {
+                    "tokenId": "ASSIGN_OPERATOR",
+                    "text": "\u003d",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 3,
+                      "colStart": 9,
+                      "colEnd": 9
+                    }
+                  },
+                  "children": [],
+                  "type": "AssignOperator"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": " ",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 3,
+                      "colStart": 10,
+                      "colEnd": 10
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                },
+                {
+                  "token": {
+                    "tokenId": "STRING",
+                    "text": "\"My workspace\"",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 3,
+                      "colStart": 11,
+                      "colEnd": 24
+                    }
+                  },
+                  "children": [],
+                  "type": "Name"
+                },
+                {
+                  "token": {
+                    "tokenId": "WHITESPACE",
+                    "text": "\n\n",
+                    "coordinates": {
+                      "lineStart": 3,
+                      "lineEnd": 5,
+                      "colStart": 25,
+                      "colEnd": 0
+                    }
+                  },
+                  "children": [],
+                  "type": "Whitespace"
+                }
+              ],
+              "type": "WorkspaceNameAssignation"
+            },
+            {
+              "token": {
+                "tokenId": "CLOSE_BRACE",
+                "text": "}",
+                "coordinates": {
+                  "lineStart": 5,
+                  "lineEnd": 5,
+                  "colStart": 0,
+                  "colEnd": 0
+                }
+              },
+              "children": [],
+              "type": "CloseBrace"
+            }
+          ],
+          "type": "WorkspaceBlock"
+        }
+      ],
+      "type": "WorkspaceNode"
+    }
+  ],
+  "type": "StructurizrDslFile"
+}

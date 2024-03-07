@@ -16,7 +16,11 @@ class WorkspaceDefinition(children: List<AstNode>) : AstNode(children)
 
 class WorkspaceBlock(children: List<AstNode>) : AstNode(children)
 
-class Whitespace(token: StructurizrToken) : AstLeaf(token)
+class Whitespace(token: StructurizrToken) : AstLeaf(token) {
+    fun containsNewLine(): Boolean {
+        return token.text.contains(System.lineSeparator())
+    }
+}
 
 class OpenBrace(token: StructurizrToken) : AstLeaf(token)
 
@@ -43,3 +47,11 @@ class Description(token: StructurizrToken) : AstLeaf(token)
 class FileUrl(token: StructurizrToken) : AstLeaf(token)
 
 class ModelStatements(children: List<AstNode>) : AstNode(children)
+
+class WorkspaceNameAssignation(children: List<AstNode>) : AstNode(children)
+
+class WorkspaceDescriptionAssignation(children: List<AstNode>) : AstNode(children)
+
+class Identifier(token: StructurizrToken) : AstLeaf(token)
+
+class AssignOperator(token: StructurizrToken) : AstLeaf(token)

@@ -206,6 +206,14 @@ class LexerTests {
         )
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = ["\"  \n\"", """\"da\""""])
+    fun `Not a string`(text: String) {
+        val lexer = StructurizrLexer(text)
+
+        lexer.next() shouldBe null
+    }
+
     @Test
     fun `extends token`() {
         val lexer = StructurizrLexer("extends")
